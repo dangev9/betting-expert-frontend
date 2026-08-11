@@ -30,6 +30,19 @@ export class Archive implements OnInit {
   readonly statusOptions: StatusFilter[] = ['ALL', 'WON', 'LOST', 'VOID'];
   readonly typeOptions: TypeFilter[] = ['ALL', 'FREE', 'VIP'];
 
+  private readonly statusLabels: Record<StatusFilter, string> = {
+    ALL: 'Сите',
+    WON: 'Добиени',
+    LOST: 'Изгубени',
+    VOID: 'Поништени',
+  };
+
+  private readonly typeLabels: Record<TypeFilter, string> = {
+    ALL: 'Сите',
+    FREE: 'Бесплатно',
+    VIP: 'VIP',
+  };
+
   ngOnInit(): void {
     this.load();
   }
@@ -78,6 +91,14 @@ export class Archive implements OnInit {
       const s = ticket.selections[0];
       return `${s.homeTeam} vs ${s.awayTeam} — ${s.prediction}`;
     }
-    return `${ticket.selectionsCount} selections`;
+    return `${ticket.selectionsCount} избори`;
+  }
+
+  statusLabel(status: StatusFilter): string {
+    return this.statusLabels[status];
+  }
+
+  typeLabel(type: TypeFilter): string {
+    return this.typeLabels[type];
   }
 }

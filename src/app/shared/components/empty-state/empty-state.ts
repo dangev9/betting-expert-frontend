@@ -29,6 +29,6 @@ import { Component, input } from '@angular/core';
   `,
 })
 export class EmptyState {
-  readonly title = input('Nothing here yet');
+  readonly title = input('Сè уште нема ништо тука');
   readonly message = input<string | null>(null);
 }

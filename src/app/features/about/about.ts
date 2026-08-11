@@ -13,24 +13,24 @@ interface Pillar {
 export class About {
   readonly pillars: Pillar[] = [
     {
-      title: 'Data',
-      text: 'Every selection starts from statistics, not from a favourite team or a gut feeling.',
+      title: 'Податоци',
+      text: 'Секој избор започнува од статистика, не од омилен тим или чувство.',
     },
     {
-      title: 'Form',
-      text: 'Recent results, home and away splits, and head-to-head trends all factor into a pick.',
+      title: 'Форма',
+      text: 'Неодамнешните резултати, домашните и гостинските серии, и меѓусебните трендови сите влијаат на изборот.',
     },
     {
-      title: 'Value',
-      text: 'We look for odds that undervalue the true probability of an outcome, not just short-priced favourites.',
+      title: 'Вредност',
+      text: 'Бараме коефициенти кои ја потценуваат вистинската веројатност на исходот, не само фаворити со ниска цена.',
     },
     {
-      title: 'Discipline',
-      text: 'A consistent process, staked sensibly, published ahead of kickoff — never chasing losses.',
+      title: 'Дисциплина',
+      text: 'Конзистентен процес, разумно вложување, објавено пред почетокот на натпреварот — никогаш не јуриме загуби.',
     },
     {
-      title: 'Transparency',
-      text: 'Every published ticket is graded and kept in the public archive, whether it wins or loses.',
+      title: 'Транспарентност',
+      text: 'Секој објавен тикет се оценува и се чува во јавната архива, без разлика дали победува или губи.',
     },
   ];
 }

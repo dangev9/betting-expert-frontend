@@ -10,6 +10,5 @@ import { environment } from '../../../../environments/environment';
 })
 export class Footer {
   readonly year = new Date().getFullYear();
-  readonly viberUrl = environment.contact.viberUrl;
   readonly instagramUrl = environment.contact.instagramUrl;
 }

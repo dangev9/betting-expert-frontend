@@ -60,7 +60,15 @@ export class Dashboard implements OnInit {
   }
 
   deleteTicket(ticket: Ticket): void {
-    const confirmed = confirm(`Delete "${ticket.title}"? This cannot be undone.`);
+    const isSettled = ticket.status === 'WON' || ticket.status === 'LOST' || ticket.status === 'VOID';
+
+    const confirmed = isSettled
+      ? confirm(
+          `Архивирај „${ticket.title}“? Завршен резултат не може трајно да се избрише - ` +
+            `ќе исчезне од страницата, но записот се чува интерно за да остане точна минатата статистика.`,
+        )
+      : confirm(`Избриши „${ticket.title}“? Ова не може да се врати.`);
+
     if (!confirmed) {
       return;
     }

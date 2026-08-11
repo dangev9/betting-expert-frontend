@@ -34,7 +34,7 @@ export class AdminLogin {
     this.authService.login(this.form.getRawValue()).subscribe({
       next: () => this.router.navigateByUrl('/admin'),
       error: () => {
-        this.errorMessage.set('Invalid email or password.');
+        this.errorMessage.set('Погрешна е-пошта или лозинка.');
         this.submitting.set(false);
       },
     });

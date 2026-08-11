@@ -26,15 +26,14 @@ export class Home implements OnInit {
   readonly loadingToday = signal(true);
   readonly loadingResults = signal(true);
 
-  readonly viberUrl = environment.contact.viberUrl;
   readonly instagramUrl = environment.contact.instagramUrl;
 
   readonly pillars = [
-    { title: 'Data', text: 'Every selection starts with the numbers, not a hunch.' },
-    { title: 'Form', text: 'Recent form, home/away splits and matchups shape each pick.' },
-    { title: 'Value', text: 'We back odds that misprice the true probability, not favourites.' },
-    { title: 'Discipline', text: 'A consistent process, staked sensibly, published before kickoff.' },
-    { title: 'Transparency', text: 'Every result — win or lose — stays in the public archive.' },
+    { title: 'Податоци', text: 'Секој избор започнува со бројки, не со претчувство.' },
+    { title: 'Форма', text: 'Неодамнешната форма, домашни/гостински серии и меѓусебни натпревари го обликуваат секој избор.' },
+    { title: 'Вредност', text: 'Ги бираме коефициентите кои погрешно ја проценуваат вистинската веројатност, не фаворитите.' },
+    { title: 'Дисциплина', text: 'Конзистентен процес, разумно вложување, објавено пред почетокот на натпреварот.' },
+    { title: 'Транспарентност', text: 'Секој резултат — победа или пораз — останува во јавната архива.' },
   ];
 
   ngOnInit(): void {

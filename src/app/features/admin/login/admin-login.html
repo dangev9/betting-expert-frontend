@@ -1,12 +1,12 @@
 <div class="admin-login">
   <div class="card admin-login__card">
     <p class="admin-login__brand">Betting<span>Expert</span></p>
-    <h1 class="admin-login__title">Admin Sign In</h1>
-    <p class="admin-login__subtitle">Restricted area. Ticket management only.</p>
+    <h1 class="admin-login__title">Најава за Админ</h1>
+    <p class="admin-login__subtitle">Ограничена област. Само за управување со тикети.</p>
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="admin-login__form">
       <div class="form-group">
-        <label class="form-label" for="email">Email</label>
+        <label class="form-label" for="email">Е-пошта</label>
         <input
           id="email"
           type="email"
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="password">Password</label>
+        <label class="form-label" for="password">Лозинка</label>
         <input
           id="password"
           type="password"
@@ -34,7 +34,7 @@
       }
 
       <button type="submit" class="btn btn-primary btn-block" [disabled]="submitting()">
-        {{ submitting() ? 'Signing in…' : 'Sign In' }}
+        {{ submitting() ? 'Најавување…' : 'Најави се' }}
       </button>
     </form>
   </div>

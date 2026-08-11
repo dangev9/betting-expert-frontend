@@ -1,10 +1,10 @@
 <section class="section page-header">
   <div class="container">
-    <p class="eyebrow">Full History</p>
-    <h1 class="section-title">Archive</h1>
+    <p class="eyebrow">Целосна Историја</p>
+    <h1 class="section-title">Архива</h1>
     <p class="section-subtitle">
-      Every settled ticket Betting Expert has ever published, with no exclusions. This is the
-      record we're held to.
+      Секој завршен тикет што Betting Expert некогаш го објавил, без исклучоци. Ова е евиденцијата
+      за која одговараме.
     </p>
   </div>
 </section>
@@ -13,7 +13,7 @@
   <div class="container">
     <div class="archive-filters">
       <div class="archive-filter-group">
-        <span class="archive-filter-label">Result</span>
+        <span class="archive-filter-label">Резултат</span>
         <div class="archive-filter-buttons">
           @for (status of statusOptions; track status) {
             <button
@@ -22,14 +22,14 @@
               [class.chip--active]="statusFilter() === status"
               (click)="setStatus(status)"
             >
-              {{ status }}
+              {{ statusLabel(status) }}
             </button>
           }
         </div>
       </div>
 
       <div class="archive-filter-group">
-        <span class="archive-filter-label">Type</span>
+        <span class="archive-filter-label">Тип</span>
         <div class="archive-filter-buttons">
           @for (type of typeOptions; track type) {
             <button
@@ -38,7 +38,7 @@
               [class.chip--active]="typeFilter() === type"
               (click)="setType(type)"
             >
-              {{ type }}
+              {{ typeLabel(type) }}
             </button>
           }
         </div>
@@ -48,20 +48,20 @@
     @if (loading()) {
       <app-loading-spinner />
     } @else if (error()) {
-      <app-empty-state title="Couldn't load the archive" message="Please refresh the page or try again shortly." />
+      <app-empty-state title="Не успеавме да ја вчитаме архивата" message="Ве молиме освежете ја страницата или обидете се повторно наскоро." />
     } @else if (!result() || result()!.content.length === 0) {
-      <app-empty-state title="No tickets match these filters" message="Try a different result or type filter." />
+      <app-empty-state title="Нема тикети што одговараат на овие филтри" message="Обидете се со друг филтер за резултат или тип." />
     } @else {
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Ticket</th>
-              <th>Selections</th>
-              <th>Odds</th>
-              <th>Type</th>
-              <th>Result</th>
+              <th>Датум</th>
+              <th>Тикет</th>
+              <th>Избори</th>
+              <th>Коефициент</th>
+              <th>Тип</th>
+              <th>Резултат</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +71,7 @@
                 <td>{{ ticket.title }}</td>
                 <td>{{ selectionsSummary(ticket) }}</td>
                 <td class="odds-value">{{ ticket.totalOdds ?? '—' }}</td>
-                <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType }}</span></td>
+                <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType === 'VIP' ? 'VIP' : 'Бесплатно' }}</span></td>
                 <td><app-status-badge [status]="ticket.status" /></td>
               </tr>
             }
@@ -82,16 +82,16 @@
       @if (result()!.totalPages > 1) {
         <div class="pagination">
           <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">
-            Previous
+            Претходна
           </button>
-          <span class="text-secondary">Page {{ page() + 1 }} of {{ result()!.totalPages }}</span>
+          <span class="text-secondary">Страница {{ page() + 1 }} од {{ result()!.totalPages }}</span>
           <button
             type="button"
             class="btn btn-outline btn-sm"
             [disabled]="page() + 1 >= result()!.totalPages"
             (click)="goToPage(page() + 1)"
           >
-            Next
+            Следна
           </button>
         </div>
       }

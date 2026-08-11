@@ -16,12 +16,12 @@ export class Navbar {
   readonly isMenuOpen = signal(false);
 
   readonly links: NavLink[] = [
-    { label: 'Home', path: '/' },
-    { label: "Today's Picks", path: '/today' },
-    { label: 'Results', path: '/results' },
-    { label: 'Archive', path: '/archive' },
+    { label: 'Почетна', path: '/' },
+    { label: 'Денешни Избори', path: '/today' },
+    { label: 'Резултати', path: '/results' },
+    { label: 'Архива', path: '/archive' },
     { label: 'VIP', path: '/vip' },
-    { label: 'About', path: '/about' },
+    { label: 'За Нас', path: '/about' },
   ];
 
   toggleMenu(): void {

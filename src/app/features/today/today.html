@@ -1,10 +1,10 @@
 <section class="section page-header">
   <div class="container">
-    <p class="eyebrow">Live Selections</p>
-    <h1 class="section-title">Today's Picks</h1>
+    <p class="eyebrow">Активни Избори</p>
+    <h1 class="section-title">Денешни Избори</h1>
     <p class="section-subtitle">
-      Every currently active ticket, free and VIP. Free picks are shown in full; VIP selections
-      stay locked until you join.
+      Секој моментално активен тикет, бесплатен и VIP. Бесплатните избори се прикажани во целост;
+      VIP селекциите остануваат заклучени додека не се придружиш.
     </p>
   </div>
 </section>
@@ -14,9 +14,9 @@
     @if (loading()) {
       <app-loading-spinner />
     } @else if (error()) {
-      <app-empty-state title="Couldn't load today's picks" message="Please refresh the page or try again shortly." />
+      <app-empty-state title="Не успеавме да ги вчитаме денешните избори" message="Ве молиме освежете ја страницата или обидете се повторно наскоро." />
     } @else if (tickets().length === 0) {
-      <app-empty-state title="No active picks right now" message="New tickets are published ahead of kickoff — check back soon." />
+      <app-empty-state title="Нема активни тикети во моментов" message="Нови тикети се објавуваат пред почетокот на натпреварите — провери повторно наскоро." />
     } @else {
       <div class="card-grid">
         @for (ticket of tickets(); track ticket.id) {

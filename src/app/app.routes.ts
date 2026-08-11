@@ -9,22 +9,22 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./features/home/home').then((m) => m.Home),
-        title: 'Betting Expert — Data-Driven Football Betting Tips',
+        title: 'Betting Expert — Фудбалски тикети засновани на податоци',
       },
       {
         path: 'today',
         loadComponent: () => import('./features/today/today').then((m) => m.Today),
-        title: "Today's Picks — Betting Expert",
+        title: 'Денешни Избори — Betting Expert',
       },
       {
         path: 'results',
         loadComponent: () => import('./features/results/results').then((m) => m.Results),
-        title: 'Recent Results — Betting Expert',
+        title: 'Резултати — Betting Expert',
       },
       {
         path: 'archive',
         loadComponent: () => import('./features/archive/archive').then((m) => m.Archive),
-        title: 'Archive — Betting Expert',
+        title: 'Архива — Betting Expert',
       },
       {
         path: 'vip',
@@ -34,14 +34,14 @@ export const routes: Routes = [
       {
         path: 'about',
         loadComponent: () => import('./features/about/about').then((m) => m.About),
-        title: 'About — Betting Expert',
+        title: 'За Нас — Betting Expert',
       },
     ],
   },
   {
     path: 'admin/login',
     loadComponent: () => import('./features/admin/login/admin-login').then((m) => m.AdminLogin),
-    title: 'Admin Sign In — Betting Expert',
+    title: 'Најава за Админ — Betting Expert',
   },
   {
     path: 'admin',
@@ -51,17 +51,17 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
-        title: 'Admin Dashboard — Betting Expert',
+        title: 'Контролна Табла — Betting Expert',
       },
       {
         path: 'tickets/new',
         loadComponent: () => import('./features/admin/ticket-form/ticket-form').then((m) => m.TicketFormPage),
-        title: 'Create Ticket — Betting Expert',
+        title: 'Креирај Тикет — Betting Expert',
       },
       {
         path: 'tickets/:id/edit',
         loadComponent: () => import('./features/admin/ticket-form/ticket-form').then((m) => m.TicketFormPage),
-        title: 'Edit Ticket — Betting Expert',
+        title: 'Уреди Тикет — Betting Expert',
       },
     ],
   },

@@ -46,7 +46,7 @@ Opens on `http://localhost:4200`.
 `src/environments/environment.ts` (production) and `environment.development.ts` (local):
 
 - `apiUrl` — backend base URL
-- `contact.viberUrl` / `contact.instagramUrl` — replace the placeholders with your real links before deploying
+-  `contact.instagramUrl` — replace the placeholders with your real links before deploying
 
 ## Build & deploy
 

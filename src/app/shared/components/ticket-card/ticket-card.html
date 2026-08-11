@@ -1,7 +1,7 @@
 <article class="ticket-card" [class.ticket-card--locked]="ticket().locked">
   <header class="ticket-card__header">
     <div class="ticket-card__badges">
-      <span class="badge" [class]="ticket().ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket().ticketType }}</span>
+      <span class="badge" [class]="ticket().ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket().ticketType === 'VIP' ? 'VIP' : 'Бесплатно' }}</span>
       <app-status-badge [status]="ticket().status" />
     </div>
     <time class="ticket-card__date">{{ ticket().eventDate | date: 'EEE, d MMM' }}</time>
@@ -15,13 +15,13 @@
   @if (ticket().locked) {
     <div class="ticket-card__locked">
       <div class="ticket-card__locked-row">
-        <span class="ticket-card__locked-count">{{ ticket().selectionsCount }} selections</span>
+        <span class="ticket-card__locked-count">{{ ticket().selectionsCount }} избори</span>
         @if (ticket().totalOdds) {
           <span class="odds-value ticket-card__locked-odds">{{ ticket().totalOdds }}</span>
         }
       </div>
-      <p class="ticket-card__locked-message">🔒 Full ticket available for VIP members</p>
-      <a routerLink="/vip" class="btn btn-primary btn-block">Join VIP</a>
+      <p class="ticket-card__locked-message">🔒 Целосниот тикет е достапен само за VIP членови</p>
+      <a routerLink="/vip" class="btn btn-primary btn-block">Придружи се на VIP</a>
     </div>
   } @else if (isSingleMatch()) {
     @for (selection of ticket().selections; track selection.id) {
@@ -34,15 +34,15 @@
         <p class="ticket-card__league">{{ selection.league }}</p>
         <div class="ticket-card__match-grid">
           <div>
-            <p class="ticket-card__label">Prediction</p>
+            <p class="ticket-card__label">Предвидување</p>
             <p class="ticket-card__value">{{ selection.prediction }}</p>
           </div>
           <div>
-            <p class="ticket-card__label">Odds</p>
+            <p class="ticket-card__label">Коефициент</p>
             <p class="ticket-card__value odds-value">{{ selection.odds }}</p>
           </div>
           <div>
-            <p class="ticket-card__label">Kickoff</p>
+            <p class="ticket-card__label">Почеток</p>
             <p class="ticket-card__value">{{ selection.eventTime | date: 'HH:mm' }}</p>
           </div>
         </div>
@@ -71,12 +71,12 @@
       }
     </ul>
     <div class="ticket-card__footer">
-      <span class="ticket-card__label">Total Odds</span>
+      <span class="ticket-card__label">Вкупен коефициент</span>
       <span class="odds-value ticket-card__total">{{ ticket().totalOdds }}</span>
     </div>
   }
 
   @if (!ticket().locked && ticket().stake && ticket().potentialReturn) {
-    <p class="ticket-card__stake">Stake {{ ticket().stake }} → Potential return {{ ticket().potentialReturn }}</p>
+    <p class="ticket-card__stake">Влог {{ ticket().stake }} → Потенцијална добивка {{ ticket().potentialReturn }}</p>
   }
 </article>

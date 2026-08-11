@@ -1,10 +1,10 @@
 <section class="section page-header">
   <div class="container">
     <p class="eyebrow">Betting Expert VIP</p>
-    <h1 class="section-title">Go further with VIP</h1>
+    <h1 class="section-title">Оди понатаму со VIP</h1>
     <p class="section-subtitle">
-      VIP is for readers who want the full daily program and direct access to the reasoning
-      behind it. It does not promise guaranteed profit — it offers more research, sooner.
+      VIP е за читатели кои сакаат целосна дневна програма и директен пристап до образложението
+      зад неа. Не ветува гарантиран профит — нуди повеќе истражување, побрзо.
     </p>
   </div>
 </section>
@@ -20,18 +20,17 @@
       }
 
       <div class="vip-cta card">
-        <p class="vip-cta__title">Ready to join?</p>
-        <p class="vip-cta__text">Reach out directly — every VIP member is onboarded personally.</p>
+        <p class="vip-cta__title">Подготвен да се придружиш?</p>
+        <p class="vip-cta__text">Контактирај директно — секој VIP член се вклучува лично.</p>
         <div class="vip-cta__actions">
-          <a [href]="viberUrl" target="_blank" rel="noopener" class="btn btn-primary">Contact on Viber</a>
-          <a [href]="instagramUrl" target="_blank" rel="noopener" class="btn btn-outline">Contact on Instagram</a>
+          <a [href]="instagramUrl" target="_blank" rel="noopener" class="btn btn-outline">Контакт преку Instagram</a>
         </div>
       </div>
     </div>
 
     @if (vipTicket(); as ticket) {
       <aside class="vip-preview">
-        <p class="vip-preview__label">Today's VIP Ticket</p>
+        <p class="vip-preview__label">Денешен VIP Тикет</p>
         <app-ticket-card [ticket]="ticket" />
       </aside>
     }
@@ -41,9 +40,9 @@
 <section class="section section--alt vip-disclaimer">
   <div class="container">
     <p class="section-subtitle">
-      Betting always carries financial risk. VIP membership provides research and access, not a
-      guarantee of winning outcomes — see the <a routerLink="/archive">public archive</a> for our
-      full, unfiltered track record.
+      Обложувањето секогаш носи финансички ризик. VIP членството обезбедува истражување и пристап,
+      не гаранција за победнички исходи — погледни ја <a routerLink="/archive">јавната архива</a>
+      за нашата целосна, нефилтрирана евиденција.
     </p>
   </div>
 </section>

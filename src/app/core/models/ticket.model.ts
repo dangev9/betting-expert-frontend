@@ -24,13 +24,13 @@ export const SPORTS: Sport[] = [
 ];
 
 export const SPORT_LABELS: Record<Sport, string> = {
-  FOOTBALL: 'Football',
-  BASKETBALL: 'Basketball',
-  TENNIS: 'Tennis',
-  ICE_HOCKEY: 'Ice Hockey',
-  VOLLEYBALL: 'Volleyball',
-  HANDBALL: 'Handball',
-  OTHER: 'Other',
+  FOOTBALL: 'Фудбал',
+  BASKETBALL: 'Кошарка',
+  TENNIS: 'Тенис',
+  ICE_HOCKEY: 'Хокеј на мраз',
+  VOLLEYBALL: 'Одбојка',
+  HANDBALL: 'Ракомет',
+  OTHER: 'Друго',
 };
 
 export interface TicketSelection {

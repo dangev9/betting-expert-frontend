@@ -1,10 +1,10 @@
 <section class="section page-header">
   <div class="container">
-    <p class="eyebrow">Track Record</p>
-    <h1 class="section-title">Recent Results</h1>
+    <p class="eyebrow">Евиденција</p>
+    <h1 class="section-title">Последни Резултати</h1>
     <p class="section-subtitle">
-      The most recently settled tickets, wins and losses alike. For the complete history, see the
-      full archive.
+      Последните завршени тикети, победи и порази подеднакво. За целосната историја, погледни ја
+      целосната архива.
     </p>
   </div>
 </section>
@@ -14,9 +14,9 @@
     @if (loading()) {
       <app-loading-spinner />
     } @else if (error()) {
-      <app-empty-state title="Couldn't load results" message="Please refresh the page or try again shortly." />
+      <app-empty-state title="Не успеавме да ги вчитаме резултатите" message="Ве молиме освежете ја страницата или обидете се повторно наскоро." />
     } @else if (tickets().length === 0) {
-      <app-empty-state title="No results yet" message="Settled tickets will appear here once the first picks are graded." />
+      <app-empty-state title="Сè уште нема резултати" message="Завршените тикети ќе се појават тука откако ќе се оценат првите избори." />
     } @else {
       <div class="card-grid">
         @for (ticket of tickets(); track ticket.id) {

@@ -1,43 +1,52 @@
 <div class="form-page-header">
   <div>
-    <a routerLink="/admin" class="btn btn-ghost btn-sm form-page-back">← Back to Dashboard</a>
-    <h1 class="section-title">{{ editingId() ? 'Edit Ticket' : 'Create Ticket' }}</h1>
+    <a routerLink="/admin" class="btn btn-ghost btn-sm form-page-back">← Назад кон контролната табла</a>
+    <h1 class="section-title">{{ editingId() ? 'Уреди Тикет' : 'Креирај Тикет' }}</h1>
   </div>
 </div>
 
 @if (loading()) {
   <app-loading-spinner />
 } @else {
+  @if (locked()) {
+    <div class="ticket-form__locked-banner">
+      Овој тикет има оценет избор, па деталите за натпреварот, коефициентот и датумот на настанот
+      се заклучени за да се заштити резултатот. Само насловот и описот сè уште можат да се уредуваат
+      тука — користете го панелот „Резултат“ на контролната табла за да го промените статусот
+      ДОБИЕН/ИЗГУБЕН/ПОНИШТЕН.
+    </div>
+  }
+
   <form [formGroup]="form" class="ticket-form">
     <div class="card ticket-form__section">
-      <h2 class="ticket-form__section-title">Ticket Details</h2>
+      <h2 class="ticket-form__section-title">Детали за тикетот</h2>
 
       <div class="form-group">
-        <label class="form-label" for="title">Title</label>
-        <input id="title" type="text" class="form-control" formControlName="title" placeholder="e.g. Free Pick of the Day" />
+        <label class="form-label" for="title">Наслов</label>
+        <input id="title" type="text" class="form-control" formControlName="title" placeholder="на пр. Бесплатен избор на денот" />
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="description">Description</label>
-        <textarea id="description" class="form-control" formControlName="description" rows="3" placeholder="Optional notes shown publicly"></textarea>
+        <label class="form-label" for="description">Опис</label>
+        <textarea id="description" class="form-control" formControlName="description" rows="3" placeholder="Опционални забелешки прикажани јавно"></textarea>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="ticketType">Ticket Type</label>
+          <label class="form-label" for="ticketType">Тип на тикет</label>
           <select id="ticketType" class="form-control" formControlName="ticketType">
-            <option value="FREE">Free</option>
+            <option value="FREE">Бесплатно</option>
             <option value="VIP">VIP</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="eventDate">Event Date</label>
+          <label class="form-label" for="eventDate">Датум на настан</label>
           <input id="eventDate" type="date" class="form-control" formControlName="eventDate" />
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="stake">Stake (optional)</label>
+          <label class="form-label" for="stake">Влог (опционално)</label>
           <input id="stake" type="number" step="0.01" min="0" class="form-control" formControlName="stake" />
         </div>
       </div>
@@ -45,23 +54,23 @@
 
     <div class="card ticket-form__section">
       <div class="ticket-form__selections-header">
-        <h2 class="ticket-form__section-title">Selections</h2>
-        <span class="odds-value ticket-form__total">Total Odds: {{ totalOdds | number: '1.2-2' }}</span>
+        <h2 class="ticket-form__section-title">Избори</h2>
+        <span class="odds-value ticket-form__total">Вкупен коефициент: {{ totalOdds | number: '1.2-2' }}</span>
       </div>
 
       <div formArrayName="selections" class="ticket-form__selections">
         @for (group of selectionsArray.controls; track $index; let i = $index) {
           <div [formGroupName]="i" class="ticket-form__selection">
             <div class="ticket-form__selection-header">
-              <span class="ticket-form__selection-index">Selection {{ i + 1 }}</span>
-              @if (selectionsArray.length > 1) {
-                <button type="button" class="btn btn-ghost btn-sm" (click)="removeSelection(i)">Remove</button>
+              <span class="ticket-form__selection-index">Избор {{ i + 1 }}</span>
+              @if (!locked() && selectionsArray.length > 1) {
+                <button type="button" class="btn btn-ghost btn-sm" (click)="removeSelection(i)">Отстрани</button>
               }
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Sport</label>
+                <label class="form-label">Спорт</label>
                 <select class="form-control" formControlName="sport">
                   @for (sport of sports; track sport) {
                     <option [value]="sport">{{ sportLabels[sport] }}</option>
@@ -69,40 +78,40 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">League</label>
+                <label class="form-label">Лига</label>
                 <input type="text" class="form-control" formControlName="league" placeholder="Premier League" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Home Team</label>
+                <label class="form-label">Домаќин</label>
                 <input type="text" class="form-control" formControlName="homeTeam" />
               </div>
               <div class="form-group">
-                <label class="form-label">Away Team</label>
+                <label class="form-label">Гостин</label>
                 <input type="text" class="form-control" formControlName="awayTeam" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Market</label>
-                <input type="text" class="form-control" formControlName="market" placeholder="Total Goals" />
+                <label class="form-label">Пазар</label>
+                <input type="text" class="form-control" formControlName="market" placeholder="Вкупно голови" />
               </div>
               <div class="form-group">
-                <label class="form-label">Prediction</label>
-                <input type="text" class="form-control" formControlName="prediction" placeholder="Over 2.5 Goals" />
+                <label class="form-label">Предвидување</label>
+                <input type="text" class="form-control" formControlName="prediction" placeholder="Над 2.5 гола" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Odds</label>
+                <label class="form-label">Коефициент</label>
                 <input type="number" step="0.01" min="1.01" class="form-control" formControlName="odds" />
               </div>
               <div class="form-group">
-                <label class="form-label">Kickoff</label>
+                <label class="form-label">Почеток</label>
                 <input type="datetime-local" class="form-control" formControlName="eventTime" />
               </div>
             </div>
@@ -110,7 +119,9 @@
         }
       </div>
 
-      <button type="button" class="btn btn-outline" (click)="addSelection()">+ Add Selection</button>
+      @if (!locked()) {
+        <button type="button" class="btn btn-outline" (click)="addSelection()">+ Додади избор</button>
+      }
     </div>
 
     @if (errorMessage()) {
@@ -118,10 +129,16 @@
     }
 
     <div class="ticket-form__actions">
-      <button type="button" class="btn btn-outline" [disabled]="saving()" (click)="saveDraft()">Save as Draft</button>
-      <button type="button" class="btn btn-primary" [disabled]="saving()" (click)="publish()">
-        {{ saving() ? 'Saving…' : 'Publish' }}
-      </button>
+      @if (locked()) {
+        <button type="button" class="btn btn-primary" [disabled]="saving()" (click)="saveLockedChanges()">
+          {{ saving() ? 'Се зачувува…' : 'Зачувај промени' }}
+        </button>
+      } @else {
+        <button type="button" class="btn btn-outline" [disabled]="saving()" (click)="saveDraft()">Зачувај како нацрт</button>
+        <button type="button" class="btn btn-primary" [disabled]="saving()" (click)="publish()">
+          {{ saving() ? 'Се зачувува…' : 'Објави' }}
+        </button>
+      }
     </div>
   </form>
 }

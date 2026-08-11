@@ -1,13 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 
 const LABELS: Record<string, string> = {
-  ACTIVE: 'Active',
-  WON: 'Won',
-  LOST: 'Lost',
-  VOID: 'Void',
-  DRAFT: 'Draft',
-  PENDING: 'Pending',
-  FREE: 'Free',
+  ACTIVE: 'Активен',
+  WON: 'Добиен',
+  LOST: 'Изгубен',
+  VOID: 'Поништен',
+  DRAFT: 'Нацрт',
+  PENDING: 'Во тек',
+  FREE: 'Бесплатно',
   VIP: 'VIP',
 };
 

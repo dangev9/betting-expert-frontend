@@ -31,6 +31,8 @@ export class TicketFormPage implements OnInit {
   readonly loading = signal(false);
   readonly saving = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  /** True once any selection has been graded WON/LOST/VOID - structural fields freeze then. */
+  readonly locked = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
@@ -62,13 +64,17 @@ export class TicketFormPage implements OnInit {
   }
 
   addSelection(): void {
+    if (this.locked()) {
+      return;
+    }
     this.selectionsArray.push(this.buildSelectionGroup());
   }
 
   removeSelection(index: number): void {
-    if (this.selectionsArray.length > 1) {
-      this.selectionsArray.removeAt(index);
+    if (this.locked() || this.selectionsArray.length <= 1) {
+      return;
     }
+    this.selectionsArray.removeAt(index);
   }
 
   saveDraft(): void {
@@ -79,10 +85,15 @@ export class TicketFormPage implements OnInit {
     this.submit('ACTIVE');
   }
 
+  /** Locked tickets only ever change title/description - the status value here is discarded server-side. */
+  saveLockedChanges(): void {
+    this.submit('ACTIVE');
+  }
+
   private submit(status: 'DRAFT' | 'ACTIVE'): void {
     if (this.form.invalid || this.selectionsArray.invalid) {
       this.form.markAllAsTouched();
-      this.errorMessage.set('Please fill in every required field before saving.');
+      this.errorMessage.set('Пополнете ги сите задолжителни полиња пред да зачувате.');
       return;
     }
 
@@ -115,7 +126,7 @@ export class TicketFormPage implements OnInit {
     request$.subscribe({
       next: () => this.router.navigateByUrl('/admin'),
       error: () => {
-        this.errorMessage.set('Could not save this ticket. Please check the fields and try again.');
+        this.errorMessage.set('Не успеавме да го зачуваме тикетот. Проверете ги полињата и обидете се повторно.');
         this.saving.set(false);
       },
     });
@@ -129,7 +140,7 @@ export class TicketFormPage implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Could not load this ticket.');
+        this.errorMessage.set('Не успеавме да го вчитаме тикетот.');
         this.loading.set(false);
       },
     });
@@ -161,6 +172,15 @@ export class TicketFormPage implements OnInit {
     }
     if (this.selectionsArray.length === 0) {
       this.selectionsArray.push(this.buildSelectionGroup());
+    }
+
+    const isLocked = ticket.selections.some((selection) => selection.status !== 'PENDING');
+    this.locked.set(isLocked);
+    if (isLocked) {
+      this.form.controls.ticketType.disable();
+      this.form.controls.eventDate.disable();
+      this.form.controls.stake.disable();
+      this.selectionsArray.disable();
     }
   }
 

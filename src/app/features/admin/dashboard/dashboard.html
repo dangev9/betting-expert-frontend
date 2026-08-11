@@ -1,56 +1,58 @@
 <div class="dashboard-header">
   <div>
-    <h1 class="section-title">Dashboard</h1>
-    <p class="text-secondary">Overview and ticket management.</p>
+    <h1 class="section-title">Контролна Табла</h1>
+    <p class="text-secondary">Преглед и управување со тикети.</p>
   </div>
-  <a routerLink="/admin/tickets/new" class="btn btn-primary">Create Ticket</a>
+  <a routerLink="/admin/tickets/new" class="btn btn-primary">Креирај Тикет</a>
 </div>
 
 @if (stats(); as s) {
   <div class="stat-grid dashboard-stats">
-    <app-stat-tile [value]="s.activeTickets" label="Active Tickets" />
-    <app-stat-tile [value]="s.wonTickets" label="Won Tickets" />
-    <app-stat-tile [value]="s.lostTickets" label="Lost Tickets" />
-    <app-stat-tile [value]="s.totalPublishedTickets" label="Total Tickets" />
-    <app-stat-tile [value]="s.winRatePercent + '%'" label="Win Rate" />
+    <app-stat-tile [value]="s.activeTickets" label="Активни Тикети" />
+    <app-stat-tile [value]="s.wonTickets" label="Добиени Тикети" />
+    <app-stat-tile [value]="s.lostTickets" label="Изгубени Тикети" />
+    <app-stat-tile [value]="s.totalPublishedTickets" label="Вкупно Тикети" />
+    <app-stat-tile [value]="s.winRatePercent + '%'" label="Успешност" />
   </div>
 }
 
 <div class="dashboard-table-section">
-  <h2 class="dashboard-section-title">All Tickets</h2>
+  <h2 class="dashboard-section-title">Сите Тикети</h2>
 
   @if (loading()) {
     <app-loading-spinner />
   } @else if (!result() || result()!.content.length === 0) {
-    <app-empty-state title="No tickets yet" message="Create your first ticket to get started." />
+    <app-empty-state title="Сè уште нема тикети" message="Креирај го твојот прв тикет за да започнеш." />
   } @else {
     <div class="table-wrap">
       <table class="data-table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Event Date</th>
-            <th>Total Odds</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>Наслов</th>
+            <th>Тип</th>
+            <th>Датум на настан</th>
+            <th>Вкупен коефициент</th>
+            <th>Статус</th>
+            <th>Дејства</th>
           </tr>
         </thead>
         <tbody>
           @for (ticket of result()!.content; track ticket.id) {
             <tr>
               <td>{{ ticket.title }}</td>
-              <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType }}</span></td>
+              <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType === 'VIP' ? 'VIP' : 'Бесплатно' }}</span></td>
               <td>{{ ticket.eventDate | date: 'd MMM y' }}</td>
               <td class="odds-value">{{ ticket.totalOdds ?? '—' }}</td>
               <td><app-status-badge [status]="ticket.status" /></td>
               <td>
                 <div class="row-actions">
-                  <a [routerLink]="['/admin/tickets', ticket.id, 'edit']" class="btn btn-ghost btn-sm">Edit</a>
+                  <a [routerLink]="['/admin/tickets', ticket.id, 'edit']" class="btn btn-ghost btn-sm">Уреди</a>
                   <button type="button" class="btn btn-ghost btn-sm" (click)="toggleExpand(ticket.id)">
-                    {{ expandedTicketId() === ticket.id ? 'Close' : 'Result' }}
+                    {{ expandedTicketId() === ticket.id ? 'Затвори' : 'Резултат' }}
                   </button>
-                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteTicket(ticket)">Delete</button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteTicket(ticket)">
+                    {{ ticket.status === 'WON' || ticket.status === 'LOST' || ticket.status === 'VOID' ? 'Архивирај' : 'Избриши' }}
+                  </button>
                 </div>
               </td>
             </tr>
@@ -73,7 +75,7 @@
                               [disabled]="busy()"
                               (click)="markSelection(selection.id, 'WON')"
                             >
-                              Won
+                              Добиен
                             </button>
                             <button
                               type="button"
@@ -82,7 +84,7 @@
                               [disabled]="busy()"
                               (click)="markSelection(selection.id, 'LOST')"
                             >
-                              Lost
+                              Изгубен
                             </button>
                             <button
                               type="button"
@@ -91,7 +93,7 @@
                               [disabled]="busy()"
                               (click)="markSelection(selection.id, 'VOID')"
                             >
-                              Void
+                              Поништен
                             </button>
                           </div>
                         </div>
@@ -99,12 +101,12 @@
                     </div>
 
                     <div class="result-panel__ticket">
-                      <span class="result-panel__label">Ticket Result</span>
+                      <span class="result-panel__label">Резултат на тикетот</span>
                       <div class="result-panel__ticket-actions">
-                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'ACTIVE')">Mark Active</button>
-                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'WON')">Mark Won</button>
-                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'LOST')">Mark Lost</button>
-                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'VOID')">Mark Void</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'ACTIVE')">Означи Активен</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'WON')">Означи Добиен</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'LOST')">Означи Изгубен</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'VOID')">Означи Поништен</button>
                       </div>
                     </div>
                   </div>
@@ -118,9 +120,9 @@
 
     @if (result()!.totalPages > 1) {
       <div class="pagination">
-        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">Previous</button>
-        <span class="text-secondary">Page {{ page() + 1 }} of {{ result()!.totalPages }}</span>
-        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() + 1 >= result()!.totalPages" (click)="goToPage(page() + 1)">Next</button>
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">Претходна</button>
+        <span class="text-secondary">Страница {{ page() + 1 }} од {{ result()!.totalPages }}</span>
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() + 1 >= result()!.totalPages" (click)="goToPage(page() + 1)">Следна</button>
       </div>
     }
   }
