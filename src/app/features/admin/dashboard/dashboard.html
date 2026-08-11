@@ -1,0 +1,127 @@
+<div class="dashboard-header">
+  <div>
+    <h1 class="section-title">Dashboard</h1>
+    <p class="text-secondary">Overview and ticket management.</p>
+  </div>
+  <a routerLink="/admin/tickets/new" class="btn btn-primary">Create Ticket</a>
+</div>
+
+@if (stats(); as s) {
+  <div class="stat-grid dashboard-stats">
+    <app-stat-tile [value]="s.activeTickets" label="Active Tickets" />
+    <app-stat-tile [value]="s.wonTickets" label="Won Tickets" />
+    <app-stat-tile [value]="s.lostTickets" label="Lost Tickets" />
+    <app-stat-tile [value]="s.totalPublishedTickets" label="Total Tickets" />
+    <app-stat-tile [value]="s.winRatePercent + '%'" label="Win Rate" />
+  </div>
+}
+
+<div class="dashboard-table-section">
+  <h2 class="dashboard-section-title">All Tickets</h2>
+
+  @if (loading()) {
+    <app-loading-spinner />
+  } @else if (!result() || result()!.content.length === 0) {
+    <app-empty-state title="No tickets yet" message="Create your first ticket to get started." />
+  } @else {
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Event Date</th>
+            <th>Total Odds</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ticket of result()!.content; track ticket.id) {
+            <tr>
+              <td>{{ ticket.title }}</td>
+              <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType }}</span></td>
+              <td>{{ ticket.eventDate | date: 'd MMM y' }}</td>
+              <td class="odds-value">{{ ticket.totalOdds ?? '—' }}</td>
+              <td><app-status-badge [status]="ticket.status" /></td>
+              <td>
+                <div class="row-actions">
+                  <a [routerLink]="['/admin/tickets', ticket.id, 'edit']" class="btn btn-ghost btn-sm">Edit</a>
+                  <button type="button" class="btn btn-ghost btn-sm" (click)="toggleExpand(ticket.id)">
+                    {{ expandedTicketId() === ticket.id ? 'Close' : 'Result' }}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteTicket(ticket)">Delete</button>
+                </div>
+              </td>
+            </tr>
+            @if (expandedTicketId() === ticket.id) {
+              <tr class="result-panel-row">
+                <td colspan="6">
+                  <div class="result-panel">
+                    <div class="result-panel__selections">
+                      @for (selection of ticket.selections; track selection.id) {
+                        <div class="result-selection">
+                          <div class="result-selection__info">
+                            <p class="result-selection__match">{{ selection.homeTeam }} vs {{ selection.awayTeam }}</p>
+                            <p class="result-selection__meta">{{ selection.market }} · {{ selection.prediction }} · <span class="odds-value">{{ selection.odds }}</span></p>
+                          </div>
+                          <div class="result-selection__actions">
+                            <button
+                              type="button"
+                              class="chip"
+                              [class.chip--active]="selection.status === 'WON'"
+                              [disabled]="busy()"
+                              (click)="markSelection(selection.id, 'WON')"
+                            >
+                              Won
+                            </button>
+                            <button
+                              type="button"
+                              class="chip"
+                              [class.chip--active]="selection.status === 'LOST'"
+                              [disabled]="busy()"
+                              (click)="markSelection(selection.id, 'LOST')"
+                            >
+                              Lost
+                            </button>
+                            <button
+                              type="button"
+                              class="chip"
+                              [class.chip--active]="selection.status === 'VOID'"
+                              [disabled]="busy()"
+                              (click)="markSelection(selection.id, 'VOID')"
+                            >
+                              Void
+                            </button>
+                          </div>
+                        </div>
+                      }
+                    </div>
+
+                    <div class="result-panel__ticket">
+                      <span class="result-panel__label">Ticket Result</span>
+                      <div class="result-panel__ticket-actions">
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'ACTIVE')">Mark Active</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'WON')">Mark Won</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'LOST')">Mark Lost</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'VOID')">Mark Void</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (result()!.totalPages > 1) {
+      <div class="pagination">
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">Previous</button>
+        <span class="text-secondary">Page {{ page() + 1 }} of {{ result()!.totalPages }}</span>
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() + 1 >= result()!.totalPages" (click)="goToPage(page() + 1)">Next</button>
+      </div>
+    }
+  }
+</div>

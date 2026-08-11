@@ -1,0 +1,150 @@
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow">Football betting tips, backed by data</p>
+      <h1 class="hero__title">Bet smarter.<br />Back the data.</h1>
+      <p class="hero__subtitle">
+        Betting Expert publishes researched football selections and tracks every single one in a
+        public archive — wins and losses alike. No guarantees, no hype. Just a disciplined process
+        you can verify for yourself.
+      </p>
+      <div class="hero__actions">
+        <a routerLink="/today" class="btn btn-primary">View Today's Picks</a>
+        <a routerLink="/vip" class="btn btn-outline">Join VIP</a>
+      </div>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__ticket card">
+        <div class="hero__ticket-row">
+          <span class="badge badge-free">FREE</span>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <p class="hero__ticket-match">Arsenal <span>vs</span> Chelsea</p>
+        <p class="hero__ticket-meta">Premier League · Over 2.5 Goals</p>
+        <div class="hero__ticket-footer">
+          <span class="text-secondary">Odds</span>
+          <span class="odds-value">1.78</span>
+        </div>
+      </div>
+      <div class="hero__stat card">
+        <p class="hero__stat-value">100%</p>
+        <p class="hero__stat-label">Results published</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Today</p>
+      <h2 class="section-title">Today's Picks</h2>
+      <p class="section-subtitle">Live selections for today's fixtures, updated as the program is finalised.</p>
+    </div>
+
+    @if (loadingToday()) {
+      <app-loading-spinner />
+    } @else if (todayTickets().length === 0) {
+      <app-empty-state title="No active picks right now" message="Check back soon — new tickets are published ahead of kickoff." />
+    } @else {
+      <div class="card-grid">
+        @for (ticket of todayTickets(); track ticket.id) {
+          <app-ticket-card [ticket]="ticket" />
+        }
+      </div>
+    }
+
+    <div class="section-footer">
+      <a routerLink="/today" class="btn btn-outline">View All Today's Picks</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Track record</p>
+      <h2 class="section-title">Recent Results</h2>
+      <p class="section-subtitle">The good and the bad — every settled ticket is shown here, in full.</p>
+    </div>
+
+    @if (loadingResults()) {
+      <app-loading-spinner />
+    } @else if (recentResults().length === 0) {
+      <app-empty-state title="No results yet" message="Settled tickets will appear here once the first picks are graded." />
+    } @else {
+      <div class="card-grid">
+        @for (ticket of recentResults(); track ticket.id) {
+          <app-ticket-card [ticket]="ticket" />
+        }
+      </div>
+    }
+
+    <div class="section-footer">
+      <a routerLink="/archive" class="btn btn-outline">View Full Archive</a>
+    </div>
+  </div>
+</section>
+
+@if (statistics(); as stats) {
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">By the numbers</p>
+        <h2 class="section-title">Statistics</h2>
+        <p class="section-subtitle">Calculated directly from every published ticket. Nothing here is estimated.</p>
+      </div>
+
+      <div class="stat-grid">
+        <app-stat-tile [value]="stats.totalPublishedTickets" label="Published Tickets" />
+        <app-stat-tile [value]="stats.wonTickets" label="Won" />
+        <app-stat-tile [value]="stats.lostTickets" label="Lost" />
+        <app-stat-tile [value]="stats.voidTickets" label="Void" />
+        <app-stat-tile [value]="stats.winRatePercent + '%'" label="Win Rate" />
+        <app-stat-tile [value]="stats.averageOdds" label="Average Odds" />
+      </div>
+    </div>
+  </section>
+}
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Why Betting Expert</p>
+      <h2 class="section-title">Analysis before emotion</h2>
+      <p class="section-subtitle">Five principles behind every published ticket.</p>
+    </div>
+
+    <div class="pillar-grid">
+      @for (pillar of pillars; track pillar.title) {
+        <div class="pillar card">
+          <p class="pillar__title">{{ pillar.title }}</p>
+          <p class="pillar__text">{{ pillar.text }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="section-footer">
+      <a routerLink="/about" class="btn btn-outline">More About Betting Expert</a>
+    </div>
+  </div>
+</section>
+
+<section class="section vip-teaser">
+  <div class="container vip-teaser__inner">
+    <div>
+      <p class="eyebrow">Go further</p>
+      <h2 class="section-title">Betting Expert VIP</h2>
+      <p class="section-subtitle">
+        More selections, priority access ahead of kickoff, and direct contact for questions about
+        the reasoning behind a pick.
+      </p>
+    </div>
+    <div class="vip-teaser__actions">
+      <a routerLink="/vip" class="btn btn-primary">Explore VIP</a>
+      <a [href]="viberUrl" target="_blank" rel="noopener" class="btn btn-outline">Contact on Viber</a>
+      <a [href]="instagramUrl" target="_blank" rel="noopener" class="btn btn-outline">Contact on Instagram</a>
+    </div>
+  </div>
+</section>

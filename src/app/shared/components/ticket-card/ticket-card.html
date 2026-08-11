@@ -1,0 +1,82 @@
+<article class="ticket-card" [class.ticket-card--locked]="ticket().locked">
+  <header class="ticket-card__header">
+    <div class="ticket-card__badges">
+      <span class="badge" [class]="ticket().ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket().ticketType }}</span>
+      <app-status-badge [status]="ticket().status" />
+    </div>
+    <time class="ticket-card__date">{{ ticket().eventDate | date: 'EEE, d MMM' }}</time>
+  </header>
+
+  <h3 class="ticket-card__title">{{ ticket().title }}</h3>
+  @if (ticket().description) {
+    <p class="ticket-card__description">{{ ticket().description }}</p>
+  }
+
+  @if (ticket().locked) {
+    <div class="ticket-card__locked">
+      <div class="ticket-card__locked-row">
+        <span class="ticket-card__locked-count">{{ ticket().selectionsCount }} selections</span>
+        @if (ticket().totalOdds) {
+          <span class="odds-value ticket-card__locked-odds">{{ ticket().totalOdds }}</span>
+        }
+      </div>
+      <p class="ticket-card__locked-message">🔒 Full ticket available for VIP members</p>
+      <a routerLink="/vip" class="btn btn-primary btn-block">Join VIP</a>
+    </div>
+  } @else if (isSingleMatch()) {
+    @for (selection of ticket().selections; track selection.id) {
+      <div class="ticket-card__match">
+        <div class="ticket-card__teams">
+          <span>{{ selection.homeTeam }}</span>
+          <span class="ticket-card__vs">vs</span>
+          <span>{{ selection.awayTeam }}</span>
+        </div>
+        <p class="ticket-card__league">{{ selection.league }}</p>
+        <div class="ticket-card__match-grid">
+          <div>
+            <p class="ticket-card__label">Prediction</p>
+            <p class="ticket-card__value">{{ selection.prediction }}</p>
+          </div>
+          <div>
+            <p class="ticket-card__label">Odds</p>
+            <p class="ticket-card__value odds-value">{{ selection.odds }}</p>
+          </div>
+          <div>
+            <p class="ticket-card__label">Kickoff</p>
+            <p class="ticket-card__value">{{ selection.eventTime | date: 'HH:mm' }}</p>
+          </div>
+        </div>
+        @if (selection.status !== 'PENDING') {
+          <div class="ticket-card__match-result">
+            <app-status-badge [status]="selection.status" />
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <ul class="ticket-card__slip">
+      @for (selection of ticket().selections; track selection.id) {
+        <li class="ticket-card__slip-row">
+          <div class="ticket-card__slip-main">
+            <p class="ticket-card__slip-match">{{ selection.homeTeam }} vs {{ selection.awayTeam }}</p>
+            <p class="ticket-card__slip-meta">{{ selection.league }} · {{ selection.prediction }}</p>
+          </div>
+          <div class="ticket-card__slip-side">
+            <span class="odds-value">{{ selection.odds }}</span>
+            @if (selection.status !== 'PENDING') {
+              <app-status-badge [status]="selection.status" />
+            }
+          </div>
+        </li>
+      }
+    </ul>
+    <div class="ticket-card__footer">
+      <span class="ticket-card__label">Total Odds</span>
+      <span class="odds-value ticket-card__total">{{ ticket().totalOdds }}</span>
+    </div>
+  }
+
+  @if (!ticket().locked && ticket().stake && ticket().potentialReturn) {
+    <p class="ticket-card__stake">Stake {{ ticket().stake }} → Potential return {{ ticket().potentialReturn }}</p>
+  }
+</article>

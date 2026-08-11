@@ -1,0 +1,41 @@
+<div class="admin-login">
+  <div class="card admin-login__card">
+    <p class="admin-login__brand">Betting<span>Expert</span></p>
+    <h1 class="admin-login__title">Admin Sign In</h1>
+    <p class="admin-login__subtitle">Restricted area. Ticket management only.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="admin-login__form">
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched"
+          autocomplete="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [class.is-invalid]="form.controls.password.invalid && form.controls.password.touched"
+          autocomplete="current-password"
+        />
+      </div>
+
+      @if (errorMessage()) {
+        <p class="form-error">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="submitting()">
+        {{ submitting() ? 'Signing in…' : 'Sign In' }}
+      </button>
+    </form>
+  </div>
+</div>

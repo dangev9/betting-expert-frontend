@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-login {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background:
+    radial-gradient(ellipse at top, rgba(16, 185, 129, 0.08), transparent 60%),
+    var(--color-bg);
+}
+
+.admin-login__card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.admin-login__brand {
+  font-weight: 800;
+  font-size: 1.1rem;
+
+  span {
+    color: var(--color-accent-text);
+  }
+}
+
+.admin-login__title {
+  margin-top: var(--space-4);
+  font-size: 1.4rem;
+}
+
+.admin-login__subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-5);
+}

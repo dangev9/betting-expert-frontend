@@ -1,0 +1,49 @@
+<section class="section page-header">
+  <div class="container">
+    <p class="eyebrow">Betting Expert VIP</p>
+    <h1 class="section-title">Go further with VIP</h1>
+    <p class="section-subtitle">
+      VIP is for readers who want the full daily program and direct access to the reasoning
+      behind it. It does not promise guaranteed profit — it offers more research, sooner.
+    </p>
+  </div>
+</section>
+
+<section class="section section--top-pad">
+  <div class="container vip-layout">
+    <div class="vip-benefits">
+      @for (benefit of benefits; track benefit.title) {
+        <div class="card vip-benefit">
+          <p class="vip-benefit__title">{{ benefit.title }}</p>
+          <p class="vip-benefit__text">{{ benefit.text }}</p>
+        </div>
+      }
+
+      <div class="vip-cta card">
+        <p class="vip-cta__title">Ready to join?</p>
+        <p class="vip-cta__text">Reach out directly — every VIP member is onboarded personally.</p>
+        <div class="vip-cta__actions">
+          <a [href]="viberUrl" target="_blank" rel="noopener" class="btn btn-primary">Contact on Viber</a>
+          <a [href]="instagramUrl" target="_blank" rel="noopener" class="btn btn-outline">Contact on Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    @if (vipTicket(); as ticket) {
+      <aside class="vip-preview">
+        <p class="vip-preview__label">Today's VIP Ticket</p>
+        <app-ticket-card [ticket]="ticket" />
+      </aside>
+    }
+  </div>
+</section>
+
+<section class="section section--alt vip-disclaimer">
+  <div class="container">
+    <p class="section-subtitle">
+      Betting always carries financial risk. VIP membership provides research and access, not a
+      guarantee of winning outcomes — see the <a routerLink="/archive">public archive</a> for our
+      full, unfiltered track record.
+    </p>
+  </div>
+</section>

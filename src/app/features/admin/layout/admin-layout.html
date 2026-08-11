@@ -1,0 +1,16 @@
+<div class="admin-shell">
+  <header class="admin-topbar">
+    <a routerLink="/admin" class="admin-topbar__brand">Betting<span>Expert</span> <em>Admin</em></a>
+    <div class="admin-topbar__right">
+      @if (adminEmail()) {
+        <span class="admin-topbar__email">{{ adminEmail() }}</span>
+      }
+      <a routerLink="/" class="btn btn-ghost btn-sm">View Site</a>
+      <button type="button" class="btn btn-outline btn-sm" (click)="logout()">Log Out</button>
+    </div>
+  </header>
+
+  <main class="admin-main container">
+    <router-outlet />
+  </main>
+</div>

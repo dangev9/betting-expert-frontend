@@ -1,0 +1,509 @@
+/* ==========================================================================
+   Betting Expert — global design tokens & base styles
+   Dark, spacious, sports-analytics aesthetic. Green is an accent, not a wash.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --color-bg: #0a0e16;
+  --color-bg-elevated: #12161f;
+  --color-bg-elevated-2: #171c27;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Text */
+  --color-text-primary: #f4f5f7;
+  --color-text-secondary: #9aa3b2;
+  --color-text-tertiary: #6b7686;
+
+  /* Brand */
+  --color-accent: #10b981;
+  --color-accent-hover: #0ea371;
+  --color-accent-soft: rgba(16, 185, 129, 0.12);
+  --color-accent-text: #34d399;
+
+  /* Status */
+  --color-won: #22c55e;
+  --color-won-soft: rgba(34, 197, 94, 0.14);
+  --color-lost: #ef4444;
+  --color-lost-soft: rgba(239, 68, 68, 0.14);
+  --color-void: #94a3b8;
+  --color-void-soft: rgba(148, 163, 184, 0.14);
+  --color-pending: #f59e0b;
+  --color-pending-soft: rgba(245, 158, 11, 0.14);
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* Shadow */
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* Layout */
+  --container-width: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   Layout utilities
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.section {
+  padding-block: var(--space-8);
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  color: var(--color-accent-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
+}
+
+.section-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  max-width: 640px;
+}
+
+.section-footer {
+  margin-top: var(--space-6);
+  display: flex;
+  justify-content: center;
+}
+
+.section--top-pad {
+  padding-top: 0;
+}
+
+.page-header {
+  padding-block: var(--space-7) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Responsive card / stat grids shared by ticket listing pages */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.75rem 1.375rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #06120c;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-sm {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.85rem;
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--color-lost);
+  color: var(--color-lost);
+}
+
+.btn-danger:hover {
+  background: var(--color-lost-soft);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+/* ==========================================================================
+   Badges
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-won {
+  background: var(--color-won-soft);
+  color: var(--color-won);
+}
+
+.badge-lost {
+  background: var(--color-lost-soft);
+  color: var(--color-lost);
+}
+
+.badge-void,
+.badge-pending {
+  background: var(--color-void-soft);
+  color: var(--color-void);
+}
+
+.badge-active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+}
+
+.badge-draft {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-tertiary);
+}
+
+.badge-free {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+}
+
+.badge-vip {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(16, 185, 129, 0.08));
+  color: var(--color-accent-text);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Filter chip — interactive sibling of .badge, used for toggle-style filters */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--color-bg-elevated-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.chip:hover {
+  color: var(--color-text-primary);
+}
+
+.chip--active {
+  background: var(--color-accent-soft);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--color-accent-text);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.form-control {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color 0.15s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.form-control.is-invalid {
+  border-color: var(--color-lost);
+}
+
+.form-error {
+  color: var(--color-lost);
+  font-size: 0.8rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.data-table th {
+  color: var(--color-text-tertiary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  background: var(--color-bg-elevated-2);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   Misc utilities
+   ========================================================================== */
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+}
+
+.odds-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-accent-text);
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  border: none;
+  margin: var(--space-5) 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

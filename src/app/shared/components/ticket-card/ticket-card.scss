@@ -1,0 +1,182 @@
+:host {
+  display: block;
+}
+
+.ticket-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ticket-card--locked {
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.ticket-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ticket-card__badges {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.ticket-card__date {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+}
+
+.ticket-card__title {
+  font-size: 1.1rem;
+}
+
+.ticket-card__description {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Locked VIP teaser */
+.ticket-card__locked {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ticket-card__locked-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.ticket-card__locked-count {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.ticket-card__locked-odds {
+  font-size: 1.4rem;
+}
+
+.ticket-card__locked-message {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+/* Single match hero */
+.ticket-card__match {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+.ticket-card__teams {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 1.15rem;
+  font-weight: 700;
+  flex-wrap: wrap;
+}
+
+.ticket-card__vs {
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.ticket-card__league {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.ticket-card__match-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.ticket-card__label {
+  font-size: 0.72rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-1);
+}
+
+.ticket-card__value {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ticket-card__match-result {
+  margin-top: var(--space-1);
+}
+
+/* Multi-selection slip */
+.ticket-card__slip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ticket-card__slip-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.ticket-card__slip-row:last-child {
+  border-bottom: none;
+}
+
+.ticket-card__slip-match {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ticket-card__slip-meta {
+  font-size: 0.78rem;
+  color: var(--color-text-tertiary);
+}
+
+.ticket-card__slip-side {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ticket-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.ticket-card__total {
+  font-size: 1.2rem;
+}
+
+.ticket-card__stake {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+}

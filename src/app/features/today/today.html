@@ -1,0 +1,28 @@
+<section class="section page-header">
+  <div class="container">
+    <p class="eyebrow">Live Selections</p>
+    <h1 class="section-title">Today's Picks</h1>
+    <p class="section-subtitle">
+      Every currently active ticket, free and VIP. Free picks are shown in full; VIP selections
+      stay locked until you join.
+    </p>
+  </div>
+</section>
+
+<section class="section section--top-pad">
+  <div class="container">
+    @if (loading()) {
+      <app-loading-spinner />
+    } @else if (error()) {
+      <app-empty-state title="Couldn't load today's picks" message="Please refresh the page or try again shortly." />
+    } @else if (tickets().length === 0) {
+      <app-empty-state title="No active picks right now" message="New tickets are published ahead of kickoff — check back soon." />
+    } @else {
+      <div class="card-grid">
+        @for (ticket of tickets(); track ticket.id) {
+          <app-ticket-card [ticket]="ticket" />
+        }
+      </div>
+    }
+  </div>
+</section>

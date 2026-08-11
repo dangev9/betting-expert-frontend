@@ -1,0 +1,28 @@
+<section class="section page-header">
+  <div class="container">
+    <p class="eyebrow">Track Record</p>
+    <h1 class="section-title">Recent Results</h1>
+    <p class="section-subtitle">
+      The most recently settled tickets, wins and losses alike. For the complete history, see the
+      full archive.
+    </p>
+  </div>
+</section>
+
+<section class="section section--top-pad">
+  <div class="container">
+    @if (loading()) {
+      <app-loading-spinner />
+    } @else if (error()) {
+      <app-empty-state title="Couldn't load results" message="Please refresh the page or try again shortly." />
+    } @else if (tickets().length === 0) {
+      <app-empty-state title="No results yet" message="Settled tickets will appear here once the first picks are graded." />
+    } @else {
+      <div class="card-grid">
+        @for (ticket of tickets(); track ticket.id) {
+          <app-ticket-card [ticket]="ticket" />
+        }
+      </div>
+    }
+  </div>
+</section>

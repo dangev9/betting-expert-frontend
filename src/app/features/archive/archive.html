@@ -1,0 +1,100 @@
+<section class="section page-header">
+  <div class="container">
+    <p class="eyebrow">Full History</p>
+    <h1 class="section-title">Archive</h1>
+    <p class="section-subtitle">
+      Every settled ticket Betting Expert has ever published, with no exclusions. This is the
+      record we're held to.
+    </p>
+  </div>
+</section>
+
+<section class="section section--top-pad">
+  <div class="container">
+    <div class="archive-filters">
+      <div class="archive-filter-group">
+        <span class="archive-filter-label">Result</span>
+        <div class="archive-filter-buttons">
+          @for (status of statusOptions; track status) {
+            <button
+              type="button"
+              class="chip"
+              [class.chip--active]="statusFilter() === status"
+              (click)="setStatus(status)"
+            >
+              {{ status }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="archive-filter-group">
+        <span class="archive-filter-label">Type</span>
+        <div class="archive-filter-buttons">
+          @for (type of typeOptions; track type) {
+            <button
+              type="button"
+              class="chip"
+              [class.chip--active]="typeFilter() === type"
+              (click)="setType(type)"
+            >
+              {{ type }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <app-loading-spinner />
+    } @else if (error()) {
+      <app-empty-state title="Couldn't load the archive" message="Please refresh the page or try again shortly." />
+    } @else if (!result() || result()!.content.length === 0) {
+      <app-empty-state title="No tickets match these filters" message="Try a different result or type filter." />
+    } @else {
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Ticket</th>
+              <th>Selections</th>
+              <th>Odds</th>
+              <th>Type</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ticket of result()!.content; track ticket.id) {
+              <tr>
+                <td>{{ ticket.eventDate | date: 'd MMM y' }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ selectionsSummary(ticket) }}</td>
+                <td class="odds-value">{{ ticket.totalOdds ?? '—' }}</td>
+                <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType }}</span></td>
+                <td><app-status-badge [status]="ticket.status" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (result()!.totalPages > 1) {
+        <div class="pagination">
+          <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">
+            Previous
+          </button>
+          <span class="text-secondary">Page {{ page() + 1 }} of {{ result()!.totalPages }}</span>
+          <button
+            type="button"
+            class="btn btn-outline btn-sm"
+            [disabled]="page() + 1 >= result()!.totalPages"
+            (click)="goToPage(page() + 1)"
+          >
+            Next
+          </button>
+        </div>
+      }
+    }
+  </div>
+</section>
