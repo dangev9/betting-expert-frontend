@@ -1,6 +1,9 @@
 <div class="admin-shell">
   <header class="admin-topbar">
-    <a routerLink="/admin" class="admin-topbar__brand">Betting<span>Expert</span> <em>Админ</em></a>
+    <a routerLink="/admin" class="admin-topbar__brand">
+      <img src="/logo-lockup.png" alt="Betting Expert" class="admin-topbar__logo" />
+      <em>Админ</em>
+    </a>
     <div class="admin-topbar__right">
       @if (adminEmail()) {
         <span class="admin-topbar__email">{{ adminEmail() }}</span>

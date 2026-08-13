@@ -10,13 +10,10 @@
   gap: var(--space-6);
 }
 
-.footer__brand {
-  font-size: 1.1rem;
-  font-weight: 800;
-
-  span {
-    color: var(--color-accent-text);
-  }
+.footer__logo {
+  height: 26px;
+  width: auto;
+  display: block;
 }
 
 .footer__tagline {

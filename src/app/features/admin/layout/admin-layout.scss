@@ -21,11 +21,8 @@
 }
 
 .admin-topbar__brand {
-  font-weight: 800;
-
-  span {
-    color: var(--color-accent-text);
-  }
+  display: flex;
+  align-items: center;
 
   em {
     font-style: normal;
@@ -33,6 +30,12 @@
     font-weight: 500;
     margin-left: var(--space-2);
   }
+}
+
+.admin-topbar__logo {
+  height: 24px;
+  width: auto;
+  display: block;
 }
 
 .admin-topbar__right {

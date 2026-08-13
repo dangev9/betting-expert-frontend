@@ -17,13 +17,14 @@
 }
 
 .navbar__brand {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+}
 
-  span {
-    color: var(--color-accent-text);
-  }
+.navbar__logo {
+  height: 28px;
+  width: auto;
+  display: block;
 }
 
 .navbar__links {
