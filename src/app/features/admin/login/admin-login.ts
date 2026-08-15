@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -33,8 +34,12 @@ export class AdminLogin {
 
     this.authService.login(this.form.getRawValue()).subscribe({
       next: () => this.router.navigateByUrl('/admin'),
-      error: () => {
-        this.errorMessage.set('Погрешна е-пошта или лозинка.');
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage.set(
+          err.status === 429
+            ? 'Премногу неуспешни обиди за најава. Обидете се повторно за неколку минути.'
+            : 'Погрешна е-пошта или лозинка.',
+        );
         this.submitting.set(false);
       },
     });
