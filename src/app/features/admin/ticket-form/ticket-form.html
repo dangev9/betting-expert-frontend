@@ -23,7 +23,17 @@
 
       <div class="form-group">
         <label class="form-label" for="title">Наслов</label>
-        <input id="title" type="text" class="form-control" formControlName="title" placeholder="на пр. Бесплатен избор на денот" />
+        <input
+          id="title"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.title.invalid && form.controls.title.touched"
+          formControlName="title"
+          placeholder="на пр. Бесплатен избор на денот"
+        />
+        @if (form.controls.title.invalid && form.controls.title.touched) {
+          <span class="form-error">Насловот е задолжителен.</span>
+        }
       </div>
 
       <div class="form-group">
@@ -42,7 +52,16 @@
 
         <div class="form-group">
           <label class="form-label" for="eventDate">Датум на настан</label>
-          <input id="eventDate" type="date" class="form-control" formControlName="eventDate" />
+          <input
+            id="eventDate"
+            type="date"
+            class="form-control"
+            [class.is-invalid]="form.controls.eventDate.invalid && form.controls.eventDate.touched"
+            formControlName="eventDate"
+          />
+          @if (form.controls.eventDate.invalid && form.controls.eventDate.touched) {
+            <span class="form-error">Датумот е задолжителен.</span>
+          }
         </div>
 
         <div class="form-group">
@@ -79,40 +98,101 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Лига</label>
-                <input type="text" class="form-control" formControlName="league" placeholder="Premier League" />
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="group.get('league')?.invalid && group.get('league')?.touched"
+                  formControlName="league"
+                  placeholder="Premier League"
+                />
+                @if (group.get('league')?.invalid && group.get('league')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Домаќин</label>
-                <input type="text" class="form-control" formControlName="homeTeam" />
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="group.get('homeTeam')?.invalid && group.get('homeTeam')?.touched"
+                  formControlName="homeTeam"
+                />
+                @if (group.get('homeTeam')?.invalid && group.get('homeTeam')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
               <div class="form-group">
                 <label class="form-label">Гостин</label>
-                <input type="text" class="form-control" formControlName="awayTeam" />
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="group.get('awayTeam')?.invalid && group.get('awayTeam')?.touched"
+                  formControlName="awayTeam"
+                />
+                @if (group.get('awayTeam')?.invalid && group.get('awayTeam')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Пазар</label>
-                <input type="text" class="form-control" formControlName="market" placeholder="Вкупно голови" />
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="group.get('market')?.invalid && group.get('market')?.touched"
+                  formControlName="market"
+                  placeholder="Вкупно голови"
+                />
+                @if (group.get('market')?.invalid && group.get('market')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
               <div class="form-group">
                 <label class="form-label">Предвидување</label>
-                <input type="text" class="form-control" formControlName="prediction" placeholder="Над 2.5 гола" />
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="group.get('prediction')?.invalid && group.get('prediction')?.touched"
+                  formControlName="prediction"
+                  placeholder="Над 2.5 гола"
+                />
+                @if (group.get('prediction')?.invalid && group.get('prediction')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Коефициент</label>
-                <input type="number" step="0.01" min="1.01" class="form-control" formControlName="odds" />
+                <input
+                  type="number"
+                  step="0.01"
+                  min="1.01"
+                  class="form-control"
+                  [class.is-invalid]="group.get('odds')?.invalid && group.get('odds')?.touched"
+                  formControlName="odds"
+                />
+                @if (group.get('odds')?.invalid && group.get('odds')?.touched) {
+                  <span class="form-error">Мора да биде поголем од 1.00.</span>
+                }
               </div>
               <div class="form-group">
                 <label class="form-label">Почеток</label>
-                <input type="datetime-local" class="form-control" formControlName="eventTime" />
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  [class.is-invalid]="group.get('eventTime')?.invalid && group.get('eventTime')?.touched"
+                  formControlName="eventTime"
+                />
+                @if (group.get('eventTime')?.invalid && group.get('eventTime')?.touched) {
+                  <span class="form-error">Задолжително поле.</span>
+                }
               </div>
             </div>
           </div>
@@ -125,7 +205,7 @@
     </div>
 
     @if (errorMessage()) {
-      <p class="form-error">{{ errorMessage() }}</p>
+      <p class="form-error ticket-form__top-error">{{ errorMessage() }}</p>
     }
 
     <div class="ticket-form__actions">

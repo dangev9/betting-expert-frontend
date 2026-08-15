@@ -81,3 +81,11 @@
   gap: var(--space-3);
   flex-wrap: wrap;
 }
+
+.form-group .form-error {
+  margin-top: var(--space-1);
+}
+
+.ticket-form__top-error {
+  font-size: 0.9rem;
+}
