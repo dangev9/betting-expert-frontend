@@ -1,0 +1,33 @@
+<div class="fixture-search">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Пребарај го денешниот натпревар..."
+    [value]="query()"
+    (input)="onInput($any($event.target).value)"
+    (focus)="open.set(true)"
+    (blur)="onBlur()"
+  />
+  @if (open() && query().trim().length >= 3) {
+    <div class="fixture-search__results">
+      @if (results().length === 0) {
+        <div class="fixture-search__empty">Нема пронајдени натпревари.</div>
+      } @else {
+        @for (fixture of results(); track fixture.id) {
+          <button type="button" class="fixture-search__result" (mousedown)="select(fixture)">
+            <span class="fixture-search__match">
+              @if (fixture.homeTeamLogoUrl) {
+                <img [src]="fixture.homeTeamLogoUrl" alt="" class="fixture-search__crest" />
+              }
+              <span class="fixture-search__teams">{{ fixture.homeTeam }} - {{ fixture.awayTeam }}</span>
+              @if (fixture.awayTeamLogoUrl) {
+                <img [src]="fixture.awayTeamLogoUrl" alt="" class="fixture-search__crest" />
+              }
+            </span>
+            <span class="fixture-search__meta">{{ fixture.league }} · {{ fixture.kickoffTime | date: 'HH:mm' }}</span>
+          </button>
+        }
+      }
+    </div>
+  }
+</div>

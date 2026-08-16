@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PageResponse, Ticket, TicketRequest, TicketSelection } from '../models/ticket.model';
+import { PageResponse, Ticket, TicketRequest } from '../models/ticket.model';
 
 export interface ArchiveFilters {
   status?: string | null;
@@ -67,7 +67,8 @@ export class TicketService {
     return this.http.patch<Ticket>(`${this.adminUrl}/${id}/status`, { status });
   }
 
-  updateSelectionStatus(selectionId: number, status: string): Observable<TicketSelection> {
-    return this.http.patch<TicketSelection>(`${this.selectionsUrl}/${selectionId}/status`, { status });
+  /** Returns the whole parent ticket - grading a selection can also change the ticket's own status. */
+  updateSelectionStatus(selectionId: number, status: string): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.selectionsUrl}/${selectionId}/status`, { status });
   }
 }

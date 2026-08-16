@@ -11,7 +11,33 @@
   margin-bottom: var(--space-6);
 }
 
+.dashboard-header__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.dashboard-sync-message {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+}
+
+.dashboard-profit--positive {
+  color: var(--color-won);
+  font-weight: 600;
+}
+
+.dashboard-profit--negative {
+  color: var(--color-lost);
+  font-weight: 600;
+}
+
 .dashboard-stats {
+  margin-bottom: var(--space-7);
+}
+
+.dashboard-table-section {
   margin-bottom: var(--space-7);
 }
 
