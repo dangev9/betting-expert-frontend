@@ -4,7 +4,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TicketService } from '../../../core/services/ticket.service';
 import { SPORTS, SPORT_LABELS, Sport, Ticket, TicketRequest } from '../../../core/models/ticket.model';
+import { FixtureSearchResult } from '../../../core/models/fixture.model';
 import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import { FixtureSearch } from '../../../shared/components/fixture-search/fixture-search';
 
 function toDateTimeLocal(iso: string): string {
   const date = new Date(iso);
@@ -14,7 +16,7 @@ function toDateTimeLocal(iso: string): string {
 
 @Component({
   selector: 'app-ticket-form',
-  imports: [ReactiveFormsModule, RouterLink, LoadingSpinner, DecimalPipe],
+  imports: [ReactiveFormsModule, RouterLink, LoadingSpinner, DecimalPipe, FixtureSearch],
   templateUrl: './ticket-form.html',
   styleUrl: './ticket-form.scss',
 })
@@ -77,6 +79,17 @@ export class TicketFormPage implements OnInit {
     this.selectionsArray.removeAt(index);
   }
 
+  onFixtureSelected(index: number, fixture: FixtureSearchResult): void {
+    this.selectionsArray.at(index).patchValue({
+      sport: fixture.sport,
+      league: fixture.league,
+      homeTeam: fixture.homeTeam,
+      awayTeam: fixture.awayTeam,
+      eventTime: toDateTimeLocal(fixture.kickoffTime),
+      fixtureId: fixture.id,
+    });
+  }
+
   saveDraft(): void {
     this.submit('DRAFT');
   }
@@ -117,6 +130,7 @@ export class TicketFormPage implements OnInit {
         prediction: s.prediction,
         odds: Number(s.odds),
         eventTime: new Date(s.eventTime).toISOString(),
+        fixtureId: s.fixtureId,
       })),
     };
 
@@ -203,6 +217,8 @@ export class TicketFormPage implements OnInit {
       prediction: [initial?.prediction ?? '', Validators.required],
       odds: [initial?.odds ?? 1.5, [Validators.required, Validators.min(1.01)]],
       eventTime: [initial?.eventTime ?? '', Validators.required],
+      /** Traceability link only - never required, cleared whenever a fresh group is built. */
+      fixtureId: this.fb.control<number | null>(null),
     });
   }
 }

@@ -87,6 +87,16 @@
               }
             </div>
 
+            @if (!locked()) {
+              <div class="form-group ticket-form__fixture-search">
+                <label class="form-label">Пребарај натпревар (опционално)</label>
+                <app-fixture-search (fixtureSelected)="onFixtureSelected(i, $event)" />
+                @if (group.get('fixtureId')?.value) {
+                  <span class="ticket-form__fixture-linked">✓ Поврзано со синхронизиран натпревар</span>
+                }
+              </div>
+            }
+
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Спорт</label>

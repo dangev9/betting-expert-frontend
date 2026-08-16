@@ -81,6 +81,8 @@ export interface TicketSelectionRequest {
   prediction: string;
   odds: number;
   eventTime: string;
+  /** Traceability link to the synced fixture this selection was autofilled from, if any. */
+  fixtureId?: number | null;
 }
 
 export interface TicketRequest {
