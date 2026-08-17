@@ -8,6 +8,8 @@
       @if (adminEmail()) {
         <span class="admin-topbar__email">{{ adminEmail() }}</span>
       }
+      <a routerLink="/admin/users" class="btn btn-ghost btn-sm">Корисници</a>
+      <a routerLink="/admin/settings" class="btn btn-ghost btn-sm">Поставки</a>
       <a routerLink="/" class="btn btn-ghost btn-sm">Види ја страницата</a>
       <button type="button" class="btn btn-outline btn-sm" (click)="logout()">Одјава</button>
     </div>

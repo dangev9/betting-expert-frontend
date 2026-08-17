@@ -17,6 +17,13 @@
         </a>
       }
       <a routerLink="/vip" class="btn btn-primary navbar__cta" (click)="closeMenu()">Придружи се на VIP</a>
+
+      @if (isAuthenticated()) {
+        <a routerLink="/account" class="navbar__link" (click)="closeMenu()">Профил</a>
+        <button type="button" class="btn btn-ghost btn-sm navbar__logout" (click)="logout()">Одјава</button>
+      } @else {
+        <a routerLink="/login" class="navbar__link" (click)="closeMenu()">Најава</a>
+      }
     </nav>
 
     <button

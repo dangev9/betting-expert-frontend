@@ -1,18 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { UserAuthService } from '../../../core/services/user-auth.service';
 
 @Component({
-  selector: 'app-admin-login',
-  imports: [ReactiveFormsModule],
-  templateUrl: './admin-login.html',
-  styleUrl: './admin-login.scss',
+  selector: 'app-signup',
+  imports: [ReactiveFormsModule, RouterLink],
+  templateUrl: './signup.html',
+  styleUrl: './signup.scss',
 })
-export class AdminLogin {
+export class Signup {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
+  private readonly userAuthService = inject(UserAuthService);
   private readonly router = inject(Router);
 
   readonly submitting = signal(false);
@@ -20,7 +20,7 @@ export class AdminLogin {
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
   submit(): void {
@@ -32,15 +32,17 @@ export class AdminLogin {
     this.submitting.set(true);
     this.errorMessage.set(null);
 
-    this.authService.login(this.form.getRawValue()).subscribe({
-      next: () => this.router.navigateByUrl('/admin'),
+    this.userAuthService.signup(this.form.getRawValue()).subscribe({
+      next: () => this.router.navigateByUrl('/'),
       error: (err: HttpErrorResponse) => {
         this.errorMessage.set(
           err.status === 0
             ? 'Не успеавме да се поврземе со серверот. Проверете ја врската и обидете се повторно.'
             : err.status === 429
-              ? 'Премногу неуспешни обиди за најава. Обидете се повторно за неколку минути.'
-              : 'Погрешна е-пошта или лозинка.',
+              ? 'Премногу обиди за регистрација. Обидете се повторно за неколку минути.'
+              : err.status === 400
+                ? 'Веќе постои сметка со оваа е-пошта.'
+                : 'Настана грешка при регистрацијата. Обидете се повторно.',
         );
         this.submitting.set(false);
       },

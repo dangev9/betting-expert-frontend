@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { TicketService } from '../../core/services/ticket.service';
-import { PageResponse, Ticket } from '../../core/models/ticket.model';
+import { PageResponse, Ticket, selectionsLabel } from '../../core/models/ticket.model';
 import { StatusBadge } from '../../shared/components/status-badge/status-badge';
 import { EmptyState } from '../../shared/components/empty-state/empty-state';
 import { LoadingSpinner } from '../../shared/components/loading-spinner/loading-spinner';
@@ -26,6 +26,8 @@ export class Archive implements OnInit {
   readonly result = signal<PageResponse<Ticket> | null>(null);
   readonly loading = signal(true);
   readonly error = signal(false);
+  readonly expandedTicketId = signal<number | null>(null);
+  readonly selectionsLabel = selectionsLabel;
 
   readonly statusOptions: StatusFilter[] = ['ALL', 'WON', 'LOST', 'VOID'];
   readonly typeOptions: TypeFilter[] = ['ALL', 'FREE', 'VIP'];
@@ -62,6 +64,10 @@ export class Archive implements OnInit {
   goToPage(page: number): void {
     this.page.set(page);
     this.load();
+  }
+
+  toggleExpand(ticketId: number): void {
+    this.expandedTicketId.update((current) => (current === ticketId ? null : ticketId));
   }
 
   private load(): void {

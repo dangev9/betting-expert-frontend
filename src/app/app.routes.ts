@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
+import { userGuard } from './core/guards/user.guard';
 
 export const routes: Routes = [
   {
@@ -18,8 +19,7 @@ export const routes: Routes = [
       },
       {
         path: 'results',
-        loadComponent: () => import('./features/results/results').then((m) => m.Results),
-        title: 'Резултати — Betting Expert',
+        redirectTo: 'archive',
       },
       {
         path: 'archive',
@@ -35,6 +35,22 @@ export const routes: Routes = [
         path: 'about',
         loadComponent: () => import('./features/about/about').then((m) => m.About),
         title: 'За Нас — Betting Expert',
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
+        title: 'Најава — Betting Expert',
+      },
+      {
+        path: 'signup',
+        loadComponent: () => import('./features/auth/signup/signup').then((m) => m.Signup),
+        title: 'Регистрација — Betting Expert',
+      },
+      {
+        path: 'account',
+        canActivate: [userGuard],
+        loadComponent: () => import('./features/account/account').then((m) => m.Account),
+        title: 'Мојата Сметка — Betting Expert',
       },
     ],
   },
@@ -62,6 +78,16 @@ export const routes: Routes = [
         path: 'tickets/:id/edit',
         loadComponent: () => import('./features/admin/ticket-form/ticket-form').then((m) => m.TicketFormPage),
         title: 'Уреди Тикет — Betting Expert',
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./features/admin/users/users').then((m) => m.Users),
+        title: 'Корисници — Betting Expert',
+      },
+      {
+        path: 'settings',
+        loadComponent: () => import('./features/admin/settings/settings').then((m) => m.AdminSettings),
+        title: 'Поставки — Betting Expert',
       },
     ],
   },
