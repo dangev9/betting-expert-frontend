@@ -64,6 +64,10 @@ export interface Ticket {
   selections: TicketSelection[];
 }
 
+export function selectionsLabel(count: number): string {
+  return count === 1 ? 'избор' : 'избори';
+}
+
 export interface PageResponse<T> {
   content: T[];
   page: number;

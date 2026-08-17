@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UserAuthService } from '../../../core/services/user-auth.service';
 
 interface NavLink {
   label: string;
@@ -13,14 +14,15 @@ interface NavLink {
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+  private readonly userAuthService = inject(UserAuthService);
+
   readonly isMenuOpen = signal(false);
+  readonly isAuthenticated = this.userAuthService.isAuthenticated;
 
   readonly links: NavLink[] = [
     { label: 'Почетна', path: '/' },
     { label: 'Денешни Избори', path: '/today' },
-    { label: 'Резултати', path: '/results' },
     { label: 'Архива', path: '/archive' },
-    { label: 'VIP', path: '/vip' },
     { label: 'За Нас', path: '/about' },
   ];
 
@@ -30,5 +32,10 @@ export class Navbar {
 
   closeMenu(): void {
     this.isMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.closeMenu();
+    this.userAuthService.logout();
   }
 }

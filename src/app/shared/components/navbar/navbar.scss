@@ -80,6 +80,10 @@
   .navbar__cta {
     margin-left: var(--space-2);
   }
+
+  .navbar__logout {
+    margin-left: var(--space-4);
+  }
 }
 
 @media (max-width: (v.$breakpoint-tablet - 1px)) {

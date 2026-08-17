@@ -1,0 +1,108 @@
+<div class="dashboard-header">
+  <div>
+    <h1 class="section-title">Корисници</h1>
+    <p class="text-secondary">Пребарувај регистрирани корисници и управувај со нивниот VIP пристап.</p>
+  </div>
+</div>
+
+<div class="users-search">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Пребарувај по е-пошта…"
+    [value]="search()"
+    (input)="onSearchInput($any($event.target).value)"
+  />
+</div>
+
+<div class="dashboard-table-section">
+  @if (loading()) {
+    <app-loading-spinner />
+  } @else if (!result() || result()!.content.length === 0) {
+    <app-empty-state title="Нема пронајдени корисници" message="Обидете се со поинаква пребарувачка фраза." />
+  } @else {
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Е-пошта</th>
+            <th>Улога</th>
+            <th>Регистриран</th>
+            <th>VIP статус</th>
+            <th>Дејства</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of result()!.content; track user.id) {
+            <tr>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role === 'ADMIN' ? 'Админ' : 'Корисник' }}</td>
+              <td>{{ user.createdAt | date: 'd MMM y' }}</td>
+              <td>
+                @if (user.vipActive) {
+                  <span class="badge badge-active">VIP до {{ user.vipExpiresAt | date: 'd MMM y, HH:mm' }}</span>
+                } @else {
+                  <span class="badge badge-void">Нема VIP</span>
+                }
+              </td>
+              <td>
+                <div class="row-actions">
+                  <button type="button" class="btn btn-ghost btn-sm" [disabled]="busy()" (click)="toggleGrant(user.id)">
+                    {{ grantingUserId() === user.id ? 'Затвори' : 'Додели VIP' }}
+                  </button>
+                  @if (user.vipActive) {
+                    <button type="button" class="btn btn-danger btn-sm" [disabled]="busy()" (click)="revoke(user)">
+                      Одземи VIP
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+            @if (grantingUserId() === user.id) {
+              <tr class="result-panel-row">
+                <td colspan="5">
+                  <div class="result-panel">
+                    <div class="result-panel__selections">
+                      @for (preset of presets; track preset.label) {
+                        <button
+                          type="button"
+                          class="chip"
+                          [disabled]="busy()"
+                          (click)="grantPreset(user, preset.days)"
+                        >
+                          {{ preset.label }}
+                        </button>
+                      }
+                    </div>
+                    <div class="result-panel__ticket">
+                      <span class="result-panel__label">Или изберете конкретен датум</span>
+                      <div class="result-panel__ticket-actions">
+                        <input
+                          type="date"
+                          class="form-control"
+                          [value]="customExpiry()"
+                          (input)="customExpiry.set($any($event.target).value)"
+                        />
+                        <button type="button" class="btn btn-primary btn-sm" [disabled]="busy() || !customExpiry()" (click)="grantCustom(user)">
+                          Потврди
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (result()!.totalPages > 1) {
+      <div class="pagination">
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() === 0" (click)="goToPage(page() - 1)">Претходна</button>
+        <span class="text-secondary">Страница {{ page() + 1 }} од {{ result()!.totalPages }}</span>
+        <button type="button" class="btn btn-outline btn-sm" [disabled]="page() + 1 >= result()!.totalPages" (click)="goToPage(page() + 1)">Следна</button>
+      </div>
+    }
+  }
+</div>

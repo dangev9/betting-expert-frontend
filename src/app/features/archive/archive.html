@@ -69,11 +69,40 @@
               <tr>
                 <td>{{ ticket.eventDate | date: 'd MMM y' }}</td>
                 <td>{{ ticket.title }}</td>
-                <td>{{ selectionsSummary(ticket) }}</td>
+                <td>
+                  @if (ticket.selectionsCount === 1) {
+                    {{ selectionsSummary(ticket) }}
+                  } @else {
+                    <button type="button" class="btn btn-ghost btn-sm archive-expand-btn" (click)="toggleExpand(ticket.id)">
+                      {{ ticket.selectionsCount }} {{ selectionsLabel(ticket.selectionsCount) }}
+                      {{ expandedTicketId() === ticket.id ? '▲' : '▼' }}
+                    </button>
+                  }
+                </td>
                 <td class="odds-value">{{ ticket.totalOdds ?? '—' }}</td>
                 <td><span class="badge" [class]="ticket.ticketType === 'VIP' ? 'badge-vip' : 'badge-free'">{{ ticket.ticketType === 'VIP' ? 'VIP' : 'Бесплатно' }}</span></td>
                 <td><app-status-badge [status]="ticket.status" /></td>
               </tr>
+              @if (expandedTicketId() === ticket.id) {
+                <tr class="archive-detail-row">
+                  <td colspan="6">
+                    <ul class="archive-selections">
+                      @for (selection of ticket.selections; track selection.id) {
+                        <li class="archive-selection">
+                          <div class="archive-selection__info">
+                            <p class="archive-selection__match">{{ selection.homeTeam }} vs {{ selection.awayTeam }}</p>
+                            <p class="archive-selection__meta">{{ selection.league }} · {{ selection.prediction }}</p>
+                          </div>
+                          <div class="archive-selection__side">
+                            <span class="odds-value">{{ selection.odds }}</span>
+                            <app-status-badge [status]="selection.status" />
+                          </div>
+                        </li>
+                      }
+                    </ul>
+                  </td>
+                </tr>
+              }
             }
           </tbody>
         </table>

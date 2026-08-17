@@ -15,7 +15,7 @@
   @if (ticket().locked) {
     <div class="ticket-card__locked">
       <div class="ticket-card__locked-row">
-        <span class="ticket-card__locked-count">{{ ticket().selectionsCount }} избори</span>
+        <span class="ticket-card__locked-count">{{ ticket().selectionsCount }} {{ selectionsLabel(ticket().selectionsCount) }}</span>
         @if (ticket().totalOdds) {
           <span class="odds-value ticket-card__locked-odds">{{ ticket().totalOdds }}</span>
         }

@@ -1,0 +1,33 @@
+.auth-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.auth-page__container {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-page__card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-page__title {
+  font-size: 1.4rem;
+}
+
+.auth-page__subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.auth-page__switch {
+  margin-top: var(--space-4);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
