@@ -87,22 +87,77 @@
   </div>
 </section>
 
-@if (statistics(); as stats) {
+@if (monthlyFreeStatistics().length > 0) {
   <section class="section">
     <div class="container">
       <div class="section-header">
         <p class="eyebrow">Во бројки</p>
-        <h2 class="section-title">Статистика</h2>
-        <p class="section-subtitle">Пресметана директно од секој објавен тикет. Ништо тука не е проценето.</p>
+        <h2 class="section-title">Статистика — Бесплатни Тикети</h2>
+        <p class="section-subtitle">Пресметана директно од секој објавен бесплатен тикет, по месец. Ништо тука не е проценето.</p>
       </div>
 
-      <div class="stat-grid">
-        <app-stat-tile [value]="stats.totalPublishedTickets" label="Објавени Тикети" />
-        <app-stat-tile [value]="stats.wonTickets" label="Добиени" />
-        <app-stat-tile [value]="stats.lostTickets" label="Изгубени" />
-        <app-stat-tile [value]="stats.voidTickets" label="Поништени" />
-        <app-stat-tile [value]="stats.winRatePercent + '%'" label="Успешност" />
-        <app-stat-tile [value]="stats.averageOdds" label="Просечен Коефициент" />
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Месец</th>
+              <th>Тикети</th>
+              <th>Добиени</th>
+              <th>Изгубени</th>
+              <th>Успешност</th>
+              <th>Просечен коеф.</th>
+              <th>Резултат</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of monthlyFreeStatistics(); track row.month) {
+              <tr>
+                <td>{{ row.month | date: 'MMMM y' }}</td>
+                <td>{{ row.ticketCount }}</td>
+                <td>{{ row.won }}</td>
+                <td>{{ row.lost }}</td>
+                <td>{{ row.winRatePercent }}%</td>
+                <td class="odds-value">{{ row.averageOdds }}</td>
+                <td [class.profit-positive]="row.netProfit > 0" [class.profit-negative]="row.netProfit < 0">
+                  {{ row.netProfit > 0 ? '+' : '' }}{{ row.netProfit | number: '1.0-2' }} ден.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+}
+
+@if (vipMonthlyProfit().length > 0) {
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Резултати</p>
+        <h2 class="section-title">VIP — Месечен Резултат</h2>
+        <p class="section-subtitle">Само нето резултатот по месец — самите избори остануваат VIP-ексклузивни.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Месец</th>
+              <th>Резултат</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of vipMonthlyProfit(); track row.month) {
+              <tr>
+                <td>{{ row.month | date: 'MMMM y' }}</td>
+                <td [class.profit-positive]="row.netProfit > 0" [class.profit-negative]="row.netProfit < 0">
+                  {{ row.netProfit > 0 ? '+' : '' }}{{ row.netProfit | number: '1.0-2' }} ден.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
       </div>
     </div>
   </section>

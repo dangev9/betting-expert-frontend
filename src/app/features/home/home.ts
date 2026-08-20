@@ -3,16 +3,16 @@ import { RouterLink } from '@angular/router';
 import { TicketService } from '../../core/services/ticket.service';
 import { StatisticsService } from '../../core/services/statistics.service';
 import { Ticket } from '../../core/models/ticket.model';
-import { Statistics } from '../../core/models/statistics.model';
+import { MonthlyFreeStatistics, PublicMonthlyProfit } from '../../core/models/statistics.model';
 import { TicketCard } from '../../shared/components/ticket-card/ticket-card';
-import { StatTile } from '../../shared/components/stat-tile/stat-tile';
 import { EmptyState } from '../../shared/components/empty-state/empty-state';
 import { LoadingSpinner } from '../../shared/components/loading-spinner/loading-spinner';
 import { environment } from '../../../environments/environment';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, TicketCard, StatTile, EmptyState, LoadingSpinner],
+  imports: [RouterLink, TicketCard, EmptyState, LoadingSpinner, DatePipe, DecimalPipe],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -22,7 +22,8 @@ export class Home implements OnInit {
 
   readonly todayTickets = signal<Ticket[]>([]);
   readonly recentResults = signal<Ticket[]>([]);
-  readonly statistics = signal<Statistics | null>(null);
+  readonly monthlyFreeStatistics = signal<MonthlyFreeStatistics[]>([]);
+  readonly vipMonthlyProfit = signal<PublicMonthlyProfit[]>([]);
   readonly loadingToday = signal(true);
   readonly loadingResults = signal(true);
 
@@ -53,9 +54,14 @@ export class Home implements OnInit {
       error: () => this.loadingResults.set(false),
     });
 
-    this.statisticsService.getStatistics().subscribe({
-      next: (stats) => this.statistics.set(stats),
-      error: () => this.statistics.set(null),
+    this.statisticsService.getMonthlyFreeStatistics().subscribe({
+      next: (rows) => this.monthlyFreeStatistics.set([...rows].reverse()),
+      error: () => this.monthlyFreeStatistics.set([]),
+    });
+
+    this.statisticsService.getPublicMonthlyVipProfit().subscribe({
+      next: (rows) => this.vipMonthlyProfit.set([...rows].reverse()),
+      error: () => this.vipMonthlyProfit.set([]),
     });
   }
 }

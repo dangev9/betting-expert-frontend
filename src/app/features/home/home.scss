@@ -99,6 +99,16 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+.profit-positive {
+  color: var(--color-won);
+  font-weight: 600;
+}
+
+.profit-negative {
+  color: var(--color-lost);
+  font-weight: 600;
+}
+
 .pillar-grid {
   display: grid;
   grid-template-columns: 1fr;
