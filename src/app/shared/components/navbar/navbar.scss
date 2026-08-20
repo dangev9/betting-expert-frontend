@@ -4,8 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(10, 14, 22, 0.85);
-  backdrop-filter: blur(10px);
+  background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -67,6 +66,11 @@
 }
 
 @media (min-width: v.$breakpoint-tablet) {
+  .navbar {
+    background: rgba(10, 14, 22, 0.85);
+    backdrop-filter: blur(10px);
+  }
+
   .navbar__toggle {
     display: none;
   }
