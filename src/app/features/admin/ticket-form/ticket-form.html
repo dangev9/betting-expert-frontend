@@ -13,7 +13,7 @@
       Овој тикет има оценет избор, па деталите за натпреварот, коефициентот и датумот на настанот
       се заклучени за да се заштити резултатот. Само насловот и описот сè уште можат да се уредуваат
       тука — користете го панелот „Резултат“ на контролната табла за да го промените статусот
-      ДОБИЕН/ИЗГУБЕН/ПОНИШТЕН.
+      ДОБИТЕН/ИЗГУБЕН/ПОНИШТЕН.
     </div>
   }
 
@@ -150,20 +150,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Пазар</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [class.is-invalid]="group.get('market')?.invalid && group.get('market')?.touched"
-                  formControlName="market"
-                  placeholder="Вкупно голови"
-                />
-                @if (group.get('market')?.invalid && group.get('market')?.touched) {
-                  <span class="form-error">Задолжително поле.</span>
-                }
-              </div>
-              <div class="form-group">
-                <label class="form-label">Предвидување</label>
+                <label class="form-label">Тип</label>
                 <input
                   type="text"
                   class="form-control"
@@ -175,9 +162,6 @@
                   <span class="form-error">Задолжително поле.</span>
                 }
               </div>
-            </div>
-
-            <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Коефициент</label>
                 <input

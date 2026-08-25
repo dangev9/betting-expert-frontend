@@ -34,7 +34,7 @@ export class Archive implements OnInit {
 
   private readonly statusLabels: Record<StatusFilter, string> = {
     ALL: 'Сите',
-    WON: 'Добиени',
+    WON: 'Добитни',
     LOST: 'Изгубени',
     VOID: 'Поништени',
   };

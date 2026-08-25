@@ -126,7 +126,6 @@ export class TicketFormPage implements OnInit {
         league: s.league,
         homeTeam: s.homeTeam,
         awayTeam: s.awayTeam,
-        market: s.market,
         prediction: s.prediction,
         odds: Number(s.odds),
         eventTime: new Date(s.eventTime).toISOString(),
@@ -177,7 +176,6 @@ export class TicketFormPage implements OnInit {
           league: selection.league,
           homeTeam: selection.homeTeam,
           awayTeam: selection.awayTeam,
-          market: selection.market,
           prediction: selection.prediction,
           odds: selection.odds,
           eventTime: toDateTimeLocal(selection.eventTime),
@@ -203,7 +201,6 @@ export class TicketFormPage implements OnInit {
     league?: string;
     homeTeam?: string;
     awayTeam?: string;
-    market?: string;
     prediction?: string;
     odds?: number;
     eventTime?: string;
@@ -213,7 +210,6 @@ export class TicketFormPage implements OnInit {
       league: [initial?.league ?? '', Validators.required],
       homeTeam: [initial?.homeTeam ?? '', Validators.required],
       awayTeam: [initial?.awayTeam ?? '', Validators.required],
-      market: [initial?.market ?? '', Validators.required],
       prediction: [initial?.prediction ?? '', Validators.required],
       odds: [initial?.odds ?? 1.5, [Validators.required, Validators.min(1.01)]],
       eventTime: [initial?.eventTime ?? '', Validators.required],

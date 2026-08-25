@@ -12,7 +12,6 @@ function baseSelection(overrides: Partial<TicketSelection> = {}): TicketSelectio
     league: 'Premier League',
     homeTeam: 'Arsenal',
     awayTeam: 'Chelsea',
-    market: 'Total Goals',
     prediction: 'Over 2.5 Goals',
     odds: 1.8,
     eventTime: '2026-01-01T18:00:00Z',

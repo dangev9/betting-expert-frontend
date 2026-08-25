@@ -2,7 +2,7 @@ import { Component, computed, input } from '@angular/core';
 
 const LABELS: Record<string, string> = {
   ACTIVE: 'Активен',
-  WON: 'Добиен',
+  WON: 'Добитен',
   LOST: 'Изгубен',
   VOID: 'Поништен',
   DRAFT: 'Нацрт',

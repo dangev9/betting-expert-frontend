@@ -17,7 +17,7 @@
 @if (stats(); as s) {
   <div class="stat-grid dashboard-stats">
     <app-stat-tile [value]="s.activeTickets" label="Активни Тикети" />
-    <app-stat-tile [value]="s.wonTickets" label="Добиени Тикети" />
+    <app-stat-tile [value]="s.wonTickets" label="Добитни Тикети" />
     <app-stat-tile [value]="s.lostTickets" label="Изгубени Тикети" />
     <app-stat-tile [value]="s.totalPublishedTickets" label="Вкупно Тикети" />
     <app-stat-tile [value]="s.winRatePercent + '%'" label="Успешност" />
@@ -105,7 +105,7 @@
                         <div class="result-selection">
                           <div class="result-selection__info">
                             <p class="result-selection__match">{{ selection.homeTeam }} vs {{ selection.awayTeam }}</p>
-                            <p class="result-selection__meta">{{ selection.market }} · {{ selection.prediction }} · <span class="odds-value">{{ selection.odds }}</span></p>
+                            <p class="result-selection__meta">{{ selection.prediction }} · <span class="odds-value">{{ selection.odds }}</span></p>
                           </div>
                           <div class="result-selection__actions">
                             <button
@@ -115,7 +115,7 @@
                               [disabled]="busy()"
                               (click)="markSelection(selection.id, 'WON')"
                             >
-                              Добиен
+                              Добитен
                             </button>
                             <button
                               type="button"
@@ -144,7 +144,7 @@
                       <span class="result-panel__label">Резултат на тикетот</span>
                       <div class="result-panel__ticket-actions">
                         <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'ACTIVE')">Означи Активен</button>
-                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'WON')">Означи Добиен</button>
+                        <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'WON')">Означи Добитен</button>
                         <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'LOST')">Означи Изгубен</button>
                         <button type="button" class="btn btn-outline btn-sm" [disabled]="busy()" (click)="markTicketStatus(ticket.id, 'VOID')">Означи Поништен</button>
                       </div>

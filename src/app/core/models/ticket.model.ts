@@ -39,7 +39,6 @@ export interface TicketSelection {
   league: string;
   homeTeam: string;
   awayTeam: string;
-  market: string;
   prediction: string;
   odds: number;
   eventTime: string;
@@ -81,7 +80,6 @@ export interface TicketSelectionRequest {
   league: string;
   homeTeam: string;
   awayTeam: string;
-  market: string;
   prediction: string;
   odds: number;
   eventTime: string;
